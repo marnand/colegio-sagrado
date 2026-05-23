@@ -1,0 +1,31 @@
+---
+import { ClipboardList, CreditCard, Shirt, ChevronRight } from 'lucide-react';
+
+const items = [
+  { icon: "ClipboardList", title: "Matrículas 2025", ariaLabel: "Informações sobre Matrículas 2025" },
+  { icon: "CreditCard", title: "Mensalidades", ariaLabel: "Consultar Mensalidades" },
+  { icon: "Shirt", title: "Loja de Uniformes", ariaLabel: "Visitar a Loja de Uniformes" },
+];
+---
+<section id="admissoes" class="py-10 bg-white border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-wrap gap-3 items-center justify-center lg:justify-start">
+      <span class="text-xs font-bold text-gray-400 uppercase tracking-widest mr-2 hidden lg:block">Acesso rápido</span>
+      {items.map((item) => (
+        <a
+          href="#"
+          aria-label={item.ariaLabel}
+          class="group flex items-center gap-3 px-5 py-3 rounded-full border border-gray-200 hover:border-primary hover:bg-primary hover:text-white text-gray-700 transition-all duration-200 text-sm font-semibold cursor-pointer"
+        >
+          <span class="text-primary group-hover:text-white transition-colors" aria-hidden="true">
+            {item.icon === "ClipboardList" && <ClipboardList size={16} />}
+            {item.icon === "CreditCard" && <CreditCard size={16} />}
+            {item.icon === "Shirt" && <Shirt size={16} />}
+          </span>
+          {item.title}
+          <ChevronRight size={14} className="opacity-40 group-hover:opacity-100 transition-opacity" />
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

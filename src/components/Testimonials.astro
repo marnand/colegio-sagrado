@@ -1,0 +1,77 @@
+---
+const testimonials = [
+  {
+    text: "Ver meu filho acordar feliz todos os dias para ir à escola não tem preço. O Colégio Sagrado oferece o equilíbrio perfeito entre exigência acadêmica e acolhimento humano.",
+    name: "Mariana Silva",
+    role: "Mãe do Lucas (Fund. I)",
+    initials: "MS",
+    featured: true,
+  },
+  {
+    text: "A evolução da minha filha no inglês é impressionante. O programa bilíngue é muito bem estruturado e os professores são extremamente dedicados e qualificados.",
+    name: "Ricardo Mendes",
+    role: "Pai da Sofia (Pré-Escola)",
+    initials: "RM",
+    featured: false,
+  },
+  {
+    text: "Escolhemos o Sagrado pelos valores cristãos que são vividos no dia a dia, não apenas no discurso. É uma extensão da educação que damos em casa.",
+    name: "Fernanda Costa",
+    role: "Mãe do Pedro (Fund. II)",
+    initials: "FC",
+    featured: false,
+  },
+];
+
+const featured = testimonials[0];
+const rest = testimonials.slice(1);
+---
+<section class="py-24 bg-surface-warm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mb-16">
+      <h2 class="font-['Playfair_Display'] text-4xl md:text-5xl font-bold text-foreground">
+        O QUE OS PAIS<br/><span class="text-primary">DIZEM SOBRE NÓS</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+      <!-- Featured testimonial -->
+      <div class="lg:col-span-3 bg-white p-10 rounded-2xl shadow-md relative border border-gray-100 flex flex-col justify-between">
+        <span class="text-8xl font-serif text-primary/10 leading-none absolute top-4 left-6" aria-hidden="true">❝</span>
+        <p class="text-gray-700 text-xl leading-relaxed relative z-10 pt-8 mb-10 font-light italic">
+          "{featured.text}"
+        </p>
+        <div class="flex items-center gap-4 border-t border-gray-100 pt-6">
+          <div class="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg shrink-0">
+            {featured.initials}
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-900 text-lg">{featured.name}</h4>
+            <span class="text-sm text-gray-500">{featured.role}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two smaller testimonials -->
+      <div class="lg:col-span-2 flex flex-col gap-8">
+        {rest.map((t) => (
+          <div class="bg-white p-8 rounded-2xl shadow-sm relative border border-gray-100 flex flex-col justify-between flex-1">
+            <span class="text-6xl font-serif text-primary/10 leading-none absolute top-3 left-5" aria-hidden="true">❝</span>
+            <p class="text-gray-600 italic relative z-10 pt-6 mb-6 text-sm leading-relaxed">
+              "{t.text}"
+            </p>
+            <div class="flex items-center gap-3 border-t border-gray-50 pt-4">
+              <div class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold shrink-0">
+                {t.initials}
+              </div>
+              <div>
+                <h4 class="font-bold text-gray-900 text-sm">{t.name}</h4>
+                <span class="text-xs text-gray-500">{t.role}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

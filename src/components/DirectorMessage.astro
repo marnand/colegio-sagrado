@@ -1,0 +1,95 @@
+---
+const highlights = [
+  "Formação integral: acadêmica, humana e emocional",
+  "Ambiente seguro e acolhedor",
+  "Equipe comprometida com o desenvolvimento de cada aluno",
+  "Família e escola caminham juntas",
+];
+---
+
+<section class="py-24 bg-white relative overflow-hidden">
+  <!-- Gold accent shape top-left -->
+  <div class="absolute top-0 left-0 w-48 h-48 bg-secondary/8 rounded-br-[80px] -z-10" aria-hidden="true"></div>
+  <!-- Red accent shape bottom-right -->
+  <div class="absolute bottom-0 right-0 w-64 h-64 bg-primary/5 rounded-tl-[100px] -z-10" aria-hidden="true"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Photo side -->
+      <div class="relative flex justify-center lg:justify-start order-2 lg:order-1">
+        <!-- Gold square backing -->
+        <div class="absolute top-6 left-6 w-full max-w-sm h-full bg-secondary/20 rounded-2xl" aria-hidden="true"></div>
+
+        <!-- Photo container -->
+        <div class="relative z-10 max-w-sm w-full">
+          <img
+            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80"
+            alt="Diretora do Colégio Sagrado Coração de Jesus"
+            loading="lazy"
+            width="600"
+            height="720"
+            class="w-full h-120 object-cover object-top rounded-2xl shadow-2xl"
+          />
+          <!-- Name card overlay -->
+          <div class="absolute -bottom-6 -right-6 bg-primary text-white px-6 py-4 rounded-xl shadow-xl">
+            <p class="font-['Playfair_Display'] font-bold text-lg leading-tight">Vania</p>
+            <p class="text-primary-foreground/80 text-sm font-medium">Diretora Geral</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text side -->
+      <div class="order-1 lg:order-2">
+        <!-- Eyebrow -->
+        <div class="flex items-center gap-4 mb-4">
+          <div class="h-px w-12 bg-secondary"></div>
+          <span class="text-primary font-semibold tracking-wider text-sm uppercase">Mensagem da Direção</span>
+        </div>
+
+        <h2 class="font-['Playfair_Display'] text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
+          UMA ESCOLA QUE<br/><span class="text-primary">FORMA VIDAS</span>
+        </h2>
+
+        <!-- Pull quote -->
+        <div class="relative pl-6 border-l-4 border-secondary mb-8">
+          <span class="text-secondary text-5xl font-serif leading-none absolute -top-2 -left-1" aria-hidden="true">❝</span>
+          <p class="font-['Playfair_Display'] italic text-gray-700 text-xl leading-relaxed pt-4">
+            Acreditamos em uma educação que transforma vidas.
+          </p>
+        </div>
+
+        <div class="space-y-4 text-gray-600 leading-relaxed text-base mb-8">
+          <p>
+            Nosso compromisso é cuidar, orientar e preparar cada aluno para o futuro, com excelência acadêmica e valores sólidos.
+          </p>
+          <p>
+            Mais do que uma escola, somos uma família que educa com amor, responsabilidade e propósito. Seja bem-vindo ao Colégio Sagrado.
+          </p>
+        </div>
+
+        <!-- Highlights list -->
+        <ul class="space-y-3 mb-10" role="list">
+          {highlights.map((item) => (
+            <li class="flex items-start gap-3">
+              <span class="mt-0.5 w-5 h-5 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0" aria-hidden="true">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1.5 5.5L3.5 7.5L8.5 2.5" stroke="#9c0d12" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span class="text-gray-700 text-sm font-medium">{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        <!-- Signature -->
+        <div class="flex items-center gap-4 pt-6 border-t border-gray-100">
+          <div>
+            <p class="font-['Playfair_Display'] font-bold text-foreground text-lg">Vania</p>
+            <p class="text-gray-500 text-sm">Diretora Geral — Colégio Sagrado Coração de Jesus</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
