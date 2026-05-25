@@ -42,7 +42,7 @@ export default function AcademicJourney() {
         <div className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg border border-gray-100">
           {activeTab === "pre" && (
             <div className="grid grid-cols-1 lg:grid-cols-2 animate-in fade-in zoom-in-95 duration-500">
-              <div className="h-[400px] lg:h-auto relative">
+              <div className="h-100 lg:h-auto relative">
                 <img
                   src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=800&q=80"
                   alt="Crianças pequenas em atividade lúdica de alfabetização na sala de Pré-Escola"
@@ -65,9 +65,7 @@ export default function AcademicJourney() {
                 <ul className="space-y-4">
                   {[
                     "Alfabetização lúdica e gradual",
-                    "Iniciação ao programa bilíngue diário",
                     "Musicalização e artes integradas",
-                    "Acompanhamento nutricional e psicológico",
                   ].map((item, i) => (
                     <li key={i} className="flex items-start">
                       <div className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mr-3 mt-1">✓</div>
@@ -81,7 +79,7 @@ export default function AcademicJourney() {
 
           {activeTab === "fund1" && (
             <div className="grid grid-cols-1 lg:grid-cols-2 animate-in fade-in zoom-in-95 duration-500">
-              <div className="h-[400px] lg:h-auto relative">
+              <div className="h-100 lg:h-auto relative">
                 <img
                   src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=800&q=80"
                   alt="Alunos do Ensino Fundamental I em atividade de robótica educacional em laboratório"
@@ -105,7 +103,6 @@ export default function AcademicJourney() {
                   {[
                     "Projeto Maker e Robótica Educacional",
                     "Educação Financeira e Empreendedorismo",
-                    "Programa Bilíngue com vivências práticas",
                     "Projetos esportivos e culturais",
                   ].map((item, i) => (
                     <li key={i} className="flex items-start">
@@ -120,7 +117,7 @@ export default function AcademicJourney() {
 
           {activeTab === "fund2" && (
             <div className="grid grid-cols-1 lg:grid-cols-2 animate-in fade-in zoom-in-95 duration-500">
-              <div className="h-[400px] lg:h-auto relative">
+              <div className="h-100 lg:h-auto relative">
                 <img
                   src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80"
                   alt="Adolescentes do Ensino Fundamental II em apresentação de projeto científico em grupo"
@@ -144,8 +141,6 @@ export default function AcademicJourney() {
                   {[
                     "Professores especialistas por disciplina",
                     "Iniciação Científica e Feiras Tecnológicas",
-                    "Preparação para Certificações Cambridge",
-                    "Orientação vocacional inicial e Mentoria",
                   ].map((item, i) => (
                     <li key={i} className="flex items-start">
                       <div className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mr-3 mt-1">✓</div>

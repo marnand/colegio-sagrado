@@ -6,11 +6,11 @@ brand
 
 ## Users
 
-Parents of prospective students in São Paulo, Brazil — families evaluating enrollment for children aged 2–14 (Pré-Escola through Ensino Fundamental II). They arrive with a decision to make: is this the right school for my child? They are middle-to-upper-middle-class, bilingual-interested, and value both academic rigor and a caring environment grounded in Christian values. Many visit on mobile during commute or downtime. Digital literacy varies widely.
+Parents of prospective students in São Paulo, Brazil — families evaluating enrollment for children aged 2–14 (Pré-Escola through Ensino Fundamental II). They arrive with a decision to make: is this the right school for my child? They are middle-to-upper-middle-class, and value both academic rigor and a caring environment grounded in Christian values. Many visit on mobile during commute or downtime. Digital literacy varies widely.
 
 ## Product Purpose
 
-Colégio Sagrado do Coração de Jesus is a Catholic school with over 38 years of tradition in São Paulo. This site is the school's institutional face: it exists to earn trust, communicate the school's values and differentiators (bilingual program, qualified faculty, Catholic formation, modern infrastructure), and convert parent attention into enrollment inquiries or booked visits. Success means a parent finishes the page confident in the school's prestige, warmth, and fit for their family — and takes the enrollment action.
+Colégio Sagrado do Coração de Jesus is a Catholic school with over 38 years of tradition in São Paulo. This site is the school's institutional face: it exists to earn trust, communicate the school's values and differentiators (qualified faculty, Catholic formation, modern infrastructure), and convert parent attention into enrollment inquiries or booked visits. Success means a parent finishes the page confident in the school's prestige, warmth, and fit for their family — and takes the enrollment action.
 
 ## Brand Personality
 
