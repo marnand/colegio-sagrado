@@ -1,21 +1,34 @@
 ---
-const items = Array.from({ length: 6 }, (_, i) => i);
+const texts = [
+    'Valores Cristãos',
+    'Excelência Acadêmica',
+    'Formação Humana',
+    'Preparação para o Futuro',
+];
+const items = Array.from({ length: 6 }, (_, i) => texts[i % texts.length]);
 ---
-<div class="striped-bg py-4 overflow-hidden shadow-inner border-y border-primary-dark">
-  <div class="w-full flex overflow-hidden">
-    <div class="animate-marquee whitespace-nowrap">
-      {items.map((i) => (
-        <span class="text-secondary font-bold text-xl md:text-2xl tracking-widest px-8 font-['Playfair_Display']">
-          ✦ EDUCANDO COM AMOR E VALORES ✦
-        </span>
-      ))}
+
+<div
+    class="striped-bg py-4 overflow-hidden shadow-inner border-y border-primary-dark"
+>
+    <div class="w-full flex overflow-hidden">
+        <div class="animate-marquee whitespace-nowrap">
+            {
+                items.map((text) => (
+                    <span class="text-secondary font-bold text-xl md:text-2xl tracking-widest px-8 font-serif">
+                        ✦ {text} ✦
+                    </span>
+                ))
+            }
+        </div>
+        <div class="animate-marquee whitespace-nowrap" aria-hidden="true">
+            {
+                items.map((text) => (
+                    <span class="text-secondary font-bold text-xl md:text-2xl tracking-widest px-8 font-serif">
+                        ✦ {text} ✦
+                    </span>
+                ))
+            }
+        </div>
     </div>
-    <div class="animate-marquee whitespace-nowrap" aria-hidden="true">
-      {items.map((i) => (
-        <span class="text-secondary font-bold text-xl md:text-2xl tracking-widest px-8 font-['Playfair_Display']">
-          ✦ EDUCANDO COM AMOR E VALORES ✦
-        </span>
-      ))}
-    </div>
-  </div>
 </div>

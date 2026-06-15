@@ -1,23 +1,27 @@
 ---
+import { Shield, Eye, Heart, Cross, Lightbulb, Handshake, Award } from 'lucide-react';
+
 const pillars = [
   {
-    label: "Missão",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
-    title: "Nossa Missão",
-    text: "Formar alunos com valores, disciplina, responsabilidade e propósito. Desenvolvemos cada criança e adolescente de forma integral, respeitando suas individualidades e potencializando suas capacidades — porque mais do que ensinar, formamos vidas.",
+    label: 'Missão',
+    icon: Shield,
+    title: 'Nossa Missão',
+    text: 'Promover uma educação de excelência, fundamentada em valores cristãos, contribuindo para a formação integral de cidadãos éticos, responsáveis, solidários e preparados para os desafios da vida.',
   },
   {
-    label: "Visão",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/></svg>`,
-    title: "Nossa Visão",
-    text: "Ser referência em educação humanista e de excelência em nossa comunidade, promovendo o desenvolvimento integral de cada aluno, que se reconhece como protagonista de sua história e se prepara para a vida com ética, empatia e competência.",
+    label: 'Visão',
+    icon: Eye,
+    title: 'Nossa Visão',
+    text: 'Com mais de 25 anos de tradição, ser referência em educação pela qualidade do ensino, pela formação humana e pelo compromisso com o desenvolvimento de cada estudante.',
   },
-  {
-    label: "Valores",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
-    title: "Nossos Valores",
-    text: "Fé, amor, respeito, responsabilidade e excelência. Acreditamos que família e escola caminham juntas, construindo um ambiente de confiança, acolhimento e crescimento — porque educar é, acima de tudo, caminhar juntos.",
-  },
+];
+
+const values = [
+  { label: 'Fé Cristã', icon: Cross },
+  { label: 'Respeito', icon: Heart },
+  { label: 'Conhecimento', icon: Lightbulb },
+  { label: 'Responsabilidade', icon: Handshake },
+  { label: 'Excelência', icon: Award },
 ];
 ---
 
@@ -33,40 +37,63 @@ const pillars = [
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Eyebrow + heading -->
     <div class="text-center mb-16">
-      <span class="text-primary font-semibold tracking-wider text-sm uppercase mb-3 block">
-        Identidade Institucional
-      </span>
-      <h2 class="font-['Playfair_Display'] text-4xl md:text-5xl font-bold text-foreground leading-tight">
-        QUEM SOMOS E <span class="text-primary">O QUE NOS MOVE</span>
+      <h2 class="font-serif text-4xl md:text-5xl font-bold text-foreground leading-tight">
+        Nossa essência
       </h2>
     </div>
 
-    <!-- Three pillars grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {pillars.map((pillar, i) => (
-        <div class={`relative bg-white rounded-2xl p-10 shadow-sm hover:shadow-xl transition-all duration-300 group border border-transparent hover:border-primary/20 ${i === 1 ? 'md:mt-6' : ''}`}>
-          <!-- Red top accent bar -->
-          <div class="absolute top-0 left-8 right-8 h-1 bg-primary rounded-b-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <!-- Missão + Visão grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+      {pillars.map((pillar) => {
+        const Icon = pillar.icon;
+        return (
+          <div class="relative bg-white rounded-2xl p-10 shadow-sm hover:shadow-xl transition-all duration-300 group border border-transparent hover:border-primary/20">
+            <!-- Red top accent bar -->
+            <div class="absolute top-0 left-8 right-8 h-1 bg-primary rounded-b-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-          <!-- Icon in gold circle -->
-          <div class="w-16 h-16 rounded-full bg-secondary/15 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-            <Fragment set:html={pillar.icon} />
+            <!-- Icon in gold circle -->
+            <div class="w-16 h-16 rounded-full bg-secondary/15 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+              <Icon size={28} />
+            </div>
+
+            <!-- Label pill -->
+            <span class="inline-block py-0.5 px-3 bg-primary/8 text-primary border border-primary/20 rounded-full text-xs font-semibold uppercase tracking-widest mb-4">
+              {pillar.label}
+            </span>
+
+            <h3 class="font-serif text-2xl font-bold text-foreground mb-4">
+              {pillar.title}
+            </h3>
+
+            <p class="text-gray-600 leading-relaxed text-base">
+              {pillar.text}
+            </p>
           </div>
+        );
+      })}
+    </div>
 
-          <!-- Label pill -->
-          <span class="inline-block py-0.5 px-3 bg-primary/8 text-primary border border-primary/20 rounded-full text-xs font-semibold uppercase tracking-widest mb-4">
-            {pillar.label}
-          </span>
+    <!-- Valores -->
+    <div class="text-center mb-10">
+      <span class="inline-block py-0.5 px-3 bg-primary/8 text-primary border border-primary/20 rounded-full text-xs font-semibold uppercase tracking-widest mb-4">
+        Valores
+      </span>
+    </div>
 
-          <h3 class="font-['Playfair_Display'] text-2xl font-bold text-foreground mb-4">
-            {pillar.title}
-          </h3>
-
-          <p class="text-gray-600 leading-relaxed text-base">
-            {pillar.text}
-          </p>
-        </div>
-      ))}
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+      {values.map((value) => {
+        const Icon = value.icon;
+        return (
+          <div class="group relative bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-transparent hover:border-primary/20 text-center">
+            <div class="w-12 h-12 rounded-full bg-secondary/15 flex items-center justify-center text-primary mx-auto mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+              <Icon size={24} />
+            </div>
+            <h4 class="font-serif text-lg font-bold text-foreground">
+              {value.label}
+            </h4>
+          </div>
+        );
+      })}
     </div>
   </div>
 </section>

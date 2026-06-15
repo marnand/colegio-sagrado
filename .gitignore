@@ -6,6 +6,7 @@ dist/
 
 # dependencies
 node_modules/
+tasks/
 
 # logs
 npm-debug.log*
@@ -24,9 +25,12 @@ pnpm-debug.log*
 .idea/
 
 .vscode/
+.impeccable/
 
 package-lock.json
 yarn.lock
 
+proposta.md
+PLANEJAMENTO_IMPLEMENTACAO.md
 textos.txt
 FULLSTACK.md

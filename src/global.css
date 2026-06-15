@@ -97,6 +97,17 @@
     background-color: var(--color-primary);
     color: white;
   }
+
+  /* Focus-visible styles for WCAG AA compliance */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-primary);
+  }
 }
 
 @keyframes marquee {

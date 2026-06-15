@@ -36,7 +36,7 @@ Static institutional landing page for a Brazilian Catholic school. Single-page s
 
 ## Content Source of Truth
 
-- **`textos.txt`** (gitignored but present locally) contains the canonical Portuguese copy approved by the school director. It is the ground truth for headlines, testimonials, section text, and CTA wording.
+- **`proposta.md`** contains the approved institutional structure, copy, and content for the website. It is the ground truth for headlines, testimonials, section text, and CTA wording.
 - **`DESIGN.md`** is the living design system reference: exact hex values, typography scale (Playfair Display + Poppins), spacing, border-radius, shadows, and component specs.
 - **`PRODUCT.md`** defines brand personality, target audience, anti-references, and accessibility targets.
 
@@ -55,4 +55,4 @@ Static institutional landing page for a Brazilian Catholic school. Single-page s
 
 - Do not add a dark mode toggle or `.dark` class theme — the site is explicitly light-only with dark sections as contrast accents.
 - Do not replace the institutional tone with playful or startup-style UI (see `PRODUCT.md` anti-references).
-- Do not delete or ignore `textos.txt` — it is the only approved copy source.
+- Do not delete or ignore `proposta.md` — it is the only approved copy source.

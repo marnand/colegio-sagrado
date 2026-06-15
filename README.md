@@ -1,6 +1,6 @@
 # Colégio Sagrado do Coração de Jesus
 
-Landing page institucional do Colégio Sagrado, escola católica com mais de 10 anos de tradição em São Paulo. Site estático de página única com navegação por âncoras, desenvolvido para conversão de matrículas (visitas agendadas e contato via WhatsApp).
+Landing page institucional do Colégio Sagrado, escola católica com mais de 25 anos de tradição em São Luís, MA. Site estático de página única com navegação por âncoras, desenvolvido para conversão de matrículas (visitas agendadas e contato via WhatsApp).
 
 ## Stack
 
@@ -36,7 +36,7 @@ Landing page institucional do Colégio Sagrado, escola católica com mais de 10 
 │   └── global.css       # Entrada do Tailwind v4, tema e animações
 ├── DESIGN.md            # Design system: cores, tipografia, componentes
 ├── PRODUCT.md           # Brand personality, personas, anti-referências
-└── textos.txt           # Conteúdo aprovado pelo diretor (source of truth)
+└── proposta.md          # Estrutura institucional e copy aprovados (source of truth)
 ```
 
 ## Design System
@@ -54,6 +54,7 @@ Landing page institucional do Colégio Sagrado, escola católica com mais de 10 
 
 ## Fontes de Conteúdo
 
+- **`proposta.md`** — estrutura institucional, copy, headlines e CTAs aprovados. É a única fonte de verdade para conteúdo.
 - **`DESIGN.md`** — especificações visuais (hex exatos, escala tipográfica, espaçamento, raios de borda, sombras).
 - **`PRODUCT.md`** — diretrizes de marca, público-alvo e acessibilidade.
 

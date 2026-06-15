@@ -3,35 +3,37 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.tsx';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
-import MissionValues from '../components/MissionValues.astro';
-import DirectorMessage from '../components/DirectorMessage.astro';
 import WhyUs from '../components/WhyUs.astro';
+import AcademicJourney from '../components/AcademicJourney.tsx';
+import Infrastructure from '../components/Infrastructure.astro';
+import MissionValues from '../components/MissionValues.astro';
+import Testimonials from '../components/Testimonials.astro';
+import DirectorMessage from '../components/DirectorMessage.astro';
 import SmallClasses from '../components/SmallClasses.astro';
 import QuickLinks from '../components/QuickLinks.astro';
 import Marquee from '../components/Marquee.astro';
-import AcademicJourney from '../components/AcademicJourney.tsx';
-import Calendar from '../components/Calendar.astro';
-import Testimonials from '../components/Testimonials.astro';
 import CTA from '../components/CTA.astro';
 import ContactForm from '../components/ContactForm.astro';
 import Footer from '../components/Footer.astro';
 ---
+
 <Layout>
-  <div class="min-h-screen overflow-x-hidden">
-    <Header client:load />
-    <Hero />
-    <About />
-    <MissionValues />
-    <DirectorMessage />
-    <WhyUs />
-    <SmallClasses />
-    <QuickLinks />
-    <Marquee />
-    <AcademicJourney client:load />
-    <Calendar />
-    <Testimonials />
-    <CTA />
-    <ContactForm />
-    <Footer />
-  </div>
+    <div id="main-content" class="min-h-screen overflow-x-hidden">
+        <Header client:load />
+        <Hero />
+        <About />
+        <WhyUs />
+        <AcademicJourney client:load />
+        <Infrastructure />
+        <MissionValues />
+        <Testimonials />
+        <DirectorMessage />
+        <SmallClasses />
+        <QuickLinks />
+        <Marquee />
+        <!-- <Calendar /> -->
+        <CTA />
+        <ContactForm />
+        <Footer />
+    </div>
 </Layout>
