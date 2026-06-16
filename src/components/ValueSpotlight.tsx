@@ -37,8 +37,8 @@ export default function ValueSpotlight() {
     if (!item || !container) return;
     const cRect = container.getBoundingClientRect();
     const iRect = item.getBoundingClientRect();
-    setIndicatorX(iRect.left - cRect.left + iRect.width / 2);
-    setIndicatorY(iRect.bottom - cRect.top + 4);
+    setIndicatorX(iRect.left - cRect.left - 20);
+    setIndicatorY(iRect.top - cRect.top + iRect.height / 2);
   }, [activeIndex]);
 
   useEffect(() => {
@@ -115,12 +115,14 @@ export default function ValueSpotlight() {
         {/* Gold dot indicator — GPU-friendly transform-only */}
         <span
           aria-hidden='true'
-          className='absolute h-2 w-2 rounded-full bg-secondary transition-transform duration-500 ease-in-out'
+          className='absolute transition-transform duration-500 ease-in-out text-secondary text-2xl pointer-events-none'
           style={{
-            transform: `translate(${indicatorX}px, ${indicatorY}px) translateX(-50%)`,
+            transform: `translate(${indicatorX}px, ${indicatorY}px) translateY(-50%)`,
             willChange: 'transform',
           }}
-        />
+        >
+        ✦
+        </span>
       </ul>
     </div>
   );
