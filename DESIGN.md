@@ -118,7 +118,7 @@ Or simple: `<span class="text-[#9c0d12] font-semibold tracking-wider text-sm upp
 
 ### Feature Cards (WhyUs)
 
-Dark background (`bg-gray-900 border border-gray-800`). Image top half, icon badge at image/content border, title + description + "Explorar" link in dark content area. Hover: border turns crimson, image opacity rises, icon border turns crimson.
+Light off-white section (`bg-[#f8f9fa]`) with a subtle dot-pattern texture. Centered school mascot floats over a soft gold-tinted rounded backdrop. Feature cards are white, `rounded-3xl`, with a light border and soft shadow; each card shows a rounded-square icon on the left and a bold title + description on the right. On desktop the cards are absolutely positioned in a constellation around the mascot; on mobile they stack vertically below the mascot. Hover: card lifts slightly and shadow deepens; icon background fills with primary crimson and turns white.
 
 ### Quick-Link Cards
 
