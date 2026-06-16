@@ -50,9 +50,6 @@ export default function AcademicJourney() {
                   height='400'
                   className='w-full h-full object-cover'
                 />
-                <div className='absolute top-6 left-6 bg-secondary text-primary font-bold px-4 py-2 rounded shadow'>
-                  Idade: 2 a 5 anos
-                </div>
               </div>
               <div className='p-10 lg:p-16 flex flex-col justify-center bg-white'>
                 <h3 className='font-serif text-3xl font-bold text-foreground mb-4'>
@@ -87,9 +84,6 @@ export default function AcademicJourney() {
                   height='400'
                   className='w-full h-full object-cover'
                 />
-                <div className='absolute top-6 left-6 bg-secondary text-primary font-bold px-4 py-2 rounded shadow'>
-                  Idade: 6 a 10 anos
-                </div>
               </div>
               <div className='p-10 lg:p-16 flex flex-col justify-center bg-white'>
                 <h3 className='font-serif text-3xl font-bold text-foreground mb-4'>
@@ -125,9 +119,6 @@ export default function AcademicJourney() {
                   height='400'
                   className='w-full h-full object-cover'
                 />
-                <div className='absolute top-6 left-6 bg-secondary text-primary font-bold px-4 py-2 rounded shadow'>
-                  Idade: 11 a 14 anos
-                </div>
               </div>
               <div className='p-10 lg:p-16 flex flex-col justify-center bg-white'>
                 <h3 className='font-serif text-3xl font-bold text-foreground mb-4'>

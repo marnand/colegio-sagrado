@@ -2,7 +2,7 @@
 
 ## Visual Theme
 
-**Theme:** Light. Parents browse this site during daytime hours on their phones or at home — the warm off-white and deep crimson read as credible, authoritative, and inviting under normal ambient light. The dark charcoal sections (WhyUs, Footer) provide dramatic contrast and rhythm, not a full dark UI.
+**Theme:** Light. Parents browse this site during daytime hours on their phones or at home — the warm off-white and deep crimson read as credible, authoritative, and inviting under normal ambient light. The dark charcoal sections (Footer) provide dramatic contrast and rhythm, not a full dark UI.
 
 **Mood:** Institutional prestige with genuine warmth. Serious without being cold. The crimson carries authority and Catholic tradition; the gold carries warmth and celebration.
 
@@ -101,9 +101,7 @@ CTA button style: `bg-[#9c0d12] text-white px-6 py-2.5 rounded font-semibold sha
 
 ### Hero
 
-Full-viewport section with Unsplash background image, crimson-to-transparent gradient overlay (`from-[#9c0d12]/90 via-[#9c0d12]/70 to-transparent`). Left-aligned content. Tag badge in gold, H1 in white Playfair Display with gold accent span. Two CTAs: solid primary + ghost border-white.
-
-Scroll indicator: vertical line + "Role para baixo" text.
+Full-viewport section with local WebP background image (`/hero.webp`), preloaded in `<head>`. Crimson-to-transparent gradient overlay using Tailwind v4 syntax (`bg-linear-to-r from-primary via-primary/50 to-transparent`) plus subtle `bg-black/20`. Left-aligned content. H1 in gold (`text-secondary`) Playfair Display. Interactive ValueSpotlight React component (`client:load`) below the subtitle. Ken Burns hover effect on background image (20s transition).
 
 ### Section Eyebrow
 
@@ -118,7 +116,7 @@ Or simple: `<span class="text-[#9c0d12] font-semibold tracking-wider text-sm upp
 
 ### Feature Cards (WhyUs)
 
-Light off-white section (`bg-[#f8f9fa]`) with a subtle dot-pattern texture. Centered school mascot floats over a soft gold-tinted rounded backdrop. Feature cards are white, `rounded-3xl`, with a light border and soft shadow; each card shows a rounded-square icon on the left and a bold title + description on the right. On desktop the cards are absolutely positioned in a constellation around the mascot; on mobile they stack vertically below the mascot. Hover: card lifts slightly and shadow deepens; icon background fills with primary crimson and turns white.
+Light off-white section (`bg-[#f8f9fa]`) with a subtle dot-pattern texture. Centered school mascot floats over a soft gold-tinted rounded backdrop. Feature cards are white, `rounded-2xl`, with a light border and soft shadow; each card shows a circular icon on the left and a bold title + description on the right. On desktop the cards are absolutely positioned in a constellation around the mascot; on mobile they stack vertically below the mascot. Hover: card lifts slightly and shadow deepens; icon background fills with primary crimson and turns white.
 
 ### Quick-Link Cards
 
@@ -156,4 +154,8 @@ Dark `bg-[#1a1a1a]` with grayscale image overlay + crimson/dark gradient. Center
 | Card hover | `transition-all duration-300` | Lift + shadow |
 | Image hover | `transition-all duration-700` | Opacity + scale |
 
-No `prefers-reduced-motion` media query present anywhere in the codebase.
+| WhyUs mascot | `float-mascote 8s ease-in-out infinite` | Custom keyframe, vertical float |
+| WhyUs mascot (mobile) | `float-soft 6s ease-in-out infinite` | Custom keyframe, softer float |
+| WhyUs dot pattern | `radial-gradient` static background | 28px grid, 4% opacity |
+
+`prefers-reduced-motion` media query in `global.css` disables marquee, bounce, and collapses all transitions/animations to near-zero for users who prefer reduced motion.
