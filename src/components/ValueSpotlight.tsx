@@ -2,8 +2,8 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 
 const values = [
   { label: 'Valores Cristãos', id: 'valores' },
-  { label: 'Excelência Acadêmica', id: 'excelencia' },
   { label: 'Formação Humana', id: 'formacao' },
+  { label: 'Excelência Acadêmica', id: 'excelencia' },
   { label: 'Preparação para o Futuro', id: 'futuro' },
 ];
 
@@ -87,7 +87,7 @@ export default function ValueSpotlight() {
         ref={containerRef}
         role='list'
         aria-label='Pilares institucionais: Valores Cristãos, Excelência Acadêmica, Formação Humana, Preparação para o Futuro'
-        className='relative flex flex-wrap gap-x-6 gap-y-2'
+        className='relative grid grid-cols-2 gap-x-6 gap-y-2'
       >
         {values.map((value, index) => (
           <li
