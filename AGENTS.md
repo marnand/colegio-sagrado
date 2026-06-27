@@ -24,7 +24,7 @@ Static institutional landing page for a Brazilian Catholic school. Single-page s
 - **Entry**: `src/pages/index.astro` — single page importing all section components.
 - **Layout**: `src/layouts/Layout.astro` — shared HTML shell, Google Fonts, floating back-to-top + WhatsApp buttons.
 - **Components**: Mostly `.astro` files; interactive ones (`Header.tsx`, `AcademicJourney.tsx`) use React with `client:load`.
-- **Assets**: `public/` for static files (logo, favicon, hero.webp, mascot images); `src/assets/` for processed images if needed.
+- **Assets**: `public/` for static files served as-is (favicon, opengraph.webp, hero.webp); `src/assets/` for images imported in components (e.g., `mascote.svg`).
 - **Styling**: `src/global.css` — Tailwind v4 entry with `@theme inline`, CSS variables, custom `@keyframes marquee`, and `prefers-reduced-motion` overrides.
 
 ## Tailwind CSS 4 Quirks
@@ -44,7 +44,8 @@ Static institutional landing page for a Brazilian Catholic school. Single-page s
 
 - **Fonts**: Playfair Display (serif, headings) and Poppins (sans, body) are loaded from Google Fonts with a `media="print"` + `onload` optimization in `Layout.astro`. Do not switch to JS font loaders without preserving the print-media trick.
 - **Navigation**: All nav links are in-page anchor scrolls (e.g., `#sobre-nos`, `#contato`). The Header uses `scrollIntoView({ behavior: "smooth" })`.
-- **Hero image**: Local `/hero.webp` with `fetchpriority="high"` and preloaded in `<head>`.
+- **Hero image**: Local `/hero.webp` imported via `<Image />` from `astro:assets` with `fetchpriority="high"` and preloaded in `<head>`.
+- **Images**: Use `<Image />` from `astro:assets` for all non-SVG images in `.astro` files (local or from `public/`). SVG images must use a regular `<img>` tag — the Astro `<Image />` component does not handle SVGs. React/TSX components (`client:load`) cannot use `<Image />` (Astro-only), so `<img>` or `getImage` + `<img>` is acceptable there.
 - **Accessibility target**: WCAG 2.1 AA (documented in `PRODUCT.md`). Touch targets should be >=44×44px. Animations respect `prefers-reduced-motion` via `global.css`.
 - **Color palette**:
   - Primary crimson: `#9c0d12` (CSS `var(--primary)`)

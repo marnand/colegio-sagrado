@@ -159,3 +159,7 @@ Dark `bg-[#1a1a1a]` with grayscale image overlay + crimson/dark gradient. Center
 | WhyUs dot pattern | `radial-gradient` static background | 28px grid, 4% opacity |
 
 `prefers-reduced-motion` media query in `global.css` disables marquee, bounce, and collapses all transitions/animations to near-zero for users who prefer reduced motion.
+
+## Image Assets
+
+All non-SVG imagery (`.webp`, `.png`, `.jpg`) in `.astro` components uses `<Image />` from `astro:assets` for automatic optimization, responsive sizing, and lazy loading. SVGs (e.g., `mascote.svg`) must use a regular `<img>` tag — Astro's `<Image />` does not handle SVG files. In React/TSX components (`client:load`), use standard `<img>` tags since `<Image />` is Astro-only.

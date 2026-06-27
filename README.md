@@ -27,9 +27,9 @@ Landing page institucional do Colégio Sagrado, escola católica com mais de 25 
 ## Estrutura
 
 ```
-├── public/              # Assets estáticos (logo, favicon, opengraph)
+├── public/              # Assets estáticos servidos como estão (favicon, opengraph.webp, hero.webp)
 ├── src/
-│   ├── assets/          # Imagens processadas (mascote, background)
+│   ├── assets/          # Imagens importadas em componentes (ex.: mascote.svg)
 │   ├── components/      # Seções da landing page (.astro e .tsx)
 │   ├── layouts/         # Layout.astro — shell HTML compartilhado
 │   ├── pages/           # index.astro — página única
@@ -72,3 +72,4 @@ Landing page institucional do Colégio Sagrado, escola católica com mais de 25 
 - **Navegação:** todas as âncoras internas usam `scrollIntoView({ behavior: "smooth" })`. Não há rotas adicionais.
 - **Modo escuro:** o site é **exclusivamente light**. Não adicione toggle de dark mode ou classes `.dark`.
 - **Otimização de fontes:** as fontes do Google são carregadas com `media="print"` + `onload="this.media='all'"` no `Layout.astro`. Preserve essa técnica se for alterar o carregamento.
+- **Imagens:** use `<Image />` de `astro:assets` para imagens não-SVG em arquivos `.astro`. SVGs devem usar `<img>` comum — o componente `<Image />` do Astro não suporta SVG. Em componentes React/TSX (`client:load`), use `<img>` ou `getImage` + `<img>`, pois `<Image />` é exclusivo do Astro.
