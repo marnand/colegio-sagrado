@@ -1,5 +1,6 @@
 ---
 import { Building, BookOpen, Cpu, Blocks, Monitor, School } from 'lucide-react';
+import { Image } from 'astro:assets';
 
 const spaces = [
   {
@@ -11,7 +12,7 @@ const spaces = [
   {
     title: 'Biblioteca',
     icon: BookOpen,
-    img: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=800&q=80',
+    img: '/biblioteca.webp',
     imgAlt: 'Biblioteca escolar',
   },
   {
@@ -23,7 +24,7 @@ const spaces = [
   {
     title: 'Brinquedoteca',
     icon: Blocks,
-    img: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?w=800&q=80',
+    img: '/brinquedoteca.webp',
     imgAlt: 'Brinquedoteca',
   },
   {
@@ -57,7 +58,7 @@ const spaces = [
         const Icon = space.icon;
         return (
           <div class="group relative overflow-hidden rounded-xl border border-gray-200 hover:border-primary transition-colors duration-300 min-h-64">
-            <img
+            <Image
               src={space.img}
               alt={space.imgAlt}
               loading="lazy"

@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import ValueSpotlight from "./ValueSpotlight.tsx";
 ---
 
@@ -6,9 +7,10 @@ import ValueSpotlight from "./ValueSpotlight.tsx";
   class="relative min-h-dvh flex items-center justify-start pt-20 overflow-hidden group"
 >
   <div class="absolute inset-0 z-0">
-    <img
+    <Image
       src="/hero.webp"
-      alt=""
+      alt="Professores e alunos do Colégio Sagrado Coração de Jesus em um ambiente de contação de histórias"
+      loading="lazy"
       role="presentation"
       fetchpriority="high"
       width="1920"

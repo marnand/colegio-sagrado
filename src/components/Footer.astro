@@ -1,6 +1,7 @@
 ---
 import { MapPin, Phone, Mail } from 'lucide-react';
 import mascote from '../assets/mascote.svg';
+import { Image } from 'astro:assets';
 ---
 <footer class="bg-surface-dark text-white/70 pt-20 pb-10 border-t-4 border-primary relative overflow-hidden">
   <div
@@ -12,7 +13,7 @@ import mascote from '../assets/mascote.svg';
 
       <!-- Brand Col -->
       <div class="col-span-1 lg:col-span-1">
-        <img src="/logo.png" alt="Logo" width="160" height="64" class="h-16 mb-6 brightness-0 invert opacity-90" />
+        <Image src="/logo.png" loading="lazy" alt="Logo" width="160" height="64" class="h-16 mb-6 brightness-0 invert opacity-90" />
         <p class="text-sm leading-relaxed mb-1">
           Colégio Sagrado Coração de Jesus
         </p>

@@ -1,5 +1,6 @@
 ---
-import { GraduationCap, Handshake, HeartHandshake, School } from "lucide-react";
+import { Image } from "astro:assets";
+import { GraduationCap, HeartHandshake, School } from "lucide-react";
 
 
 ---
@@ -83,12 +84,12 @@ import { GraduationCap, Handshake, HeartHandshake, School } from "lucide-react";
           class="absolute inset-0 bg-secondary translate-x-4 translate-y-4 rounded shadow-xl"
         >
         </div>
-        <img
+        <Image
           src="/image.png"
           alt="Crianças em sala de aula com professora durante atividade pedagógica"
           loading="lazy"
-          width="800"
-          height="600"
+          width={800}
+          height={600}
           class="relative z-10 w-full h-150 object-cover rounded shadow-2xl"
         />
         <div
