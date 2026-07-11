@@ -3,9 +3,6 @@
   "name": "colegio-sagrado",
   "pages_build_output_dir": "./dist",
   "compatibility_date": "2026-05-18",
-  "assets": {
-    "directory": "./dist"
-  },
   "send_email": [
     {
       "name": "EMAIL",
