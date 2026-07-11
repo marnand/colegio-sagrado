@@ -1,38 +1,103 @@
 ---
-import { MapPin, Phone, Mail } from 'lucide-react';
-import mascote from '../assets/mascote.svg';
-import { Image } from 'astro:assets';
+import { MapPin, Phone, Mail } from "lucide-react";
+import mascote from "../assets/mascote.svg";
+import { Image } from "astro:assets";
 ---
-<footer class="bg-surface-dark text-white/70 pt-20 pb-10 border-t-4 border-primary relative overflow-hidden">
+
+<footer
+  class="bg-surface-dark text-white/70 pt-20 pb-10 border-t-4 border-primary relative overflow-hidden"
+>
   <div
     class="absolute inset-0 bg-no-repeat bg-bottom-right pointer-events-none opacity-[0.06]"
     style={`background-image: url('${mascote.src}'); background-size: 500px auto;`}
-  ></div>
+  >
+  </div>
+
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-
       <!-- Brand Col -->
       <div class="col-span-1 lg:col-span-1">
-        <Image src="/logo.png" loading="lazy" alt="Logo" width="160" height="64" class="h-16 mb-6 brightness-0 invert opacity-90" />
+        <Image
+          src="/logo.png"
+          loading="lazy"
+          alt="Logo"
+          width="160"
+          height="64"
+          class="h-16 mb-6 brightness-0 invert opacity-90"
+        />
         <p class="text-sm leading-relaxed mb-1">
           Colégio Sagrado Coração de Jesus
         </p>
         <p class="text-white/60 text-sm leading-relaxed mb-3">
-          Aqui, sua família é acolhida com cuidado, respeito e proximidade, porque acreditamos que educar é caminhar juntos.
+          Aqui, sua família é acolhida com cuidado, respeito e proximidade,
+          porque acreditamos que educar é caminhar juntos.
         </p>
         <p class="text-secondary/80 text-sm italic font-serif mb-6">
           Educar é caminhar juntos.
         </p>
         <div class="flex gap-4">
-          <a href="#" aria-label="Instagram do Colégio Sagrado" class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors text-white/70 cursor-pointer">
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          <a
+            href="#"
+            aria-label="Instagram do Colégio Sagrado"
+            class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors text-white/70 cursor-pointer"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              ><rect width="20" height="20" x="2" y="2" rx="5" ry="5"
+              ></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+              ></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg
+            >
           </a>
-          <a href="#" aria-label="Facebook do Colégio Sagrado" class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors text-white/70 cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          <a
+            href="#"
+            aria-label="Facebook do Colégio Sagrado"
+            class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors text-white/70 cursor-pointer"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              ><path
+                d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+              ></path></svg
+            >
           </a>
-          <a href="#" aria-label="YouTube do Colégio Sagrado" class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors text-white/70 cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+          <a
+            href="#"
+            aria-label="YouTube do Colégio Sagrado"
+            class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors text-white/70 cursor-pointer"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              ><path
+                d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"
+              ></path><path d="m10 15 5-3-5-3z"></path></svg
+            >
           </a>
         </div>
       </div>
@@ -41,11 +106,36 @@ import { Image } from 'astro:assets';
       <div>
         <h4 class="text-white font-bold mb-6 text-lg">Institucional</h4>
         <ul class="space-y-3 text-sm">
-          <li><a href="#" class="hover:text-secondary transition-colors cursor-pointer">Nossa História</a></li>
-          <li><a href="#" class="hover:text-secondary transition-colors cursor-pointer">Proposta Pedagógica</a></li>
-          <li><a href="#" class="hover:text-secondary transition-colors cursor-pointer">Infraestrutura</a></li>
-          <li><a href="#" class="hover:text-secondary transition-colors cursor-pointer">Trabalhe Conosco</a></li>
-          <li><a href="#" class="hover:text-secondary transition-colors cursor-pointer">Transparência</a></li>
+          <li>
+            <a
+              href="#"
+              class="hover:text-secondary transition-colors cursor-pointer"
+              >Nossa História</a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="hover:text-secondary transition-colors cursor-pointer"
+              >Proposta Pedagógica</a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="hover:text-secondary transition-colors cursor-pointer"
+              >Infraestrutura</a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="hover:text-secondary transition-colors cursor-pointer"
+              >Trabalhe Conosco</a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="hover:text-secondary transition-colors cursor-pointer"
+              >Transparência</a>
+          </li>
         </ul>
       </div>
 
@@ -53,10 +143,30 @@ import { Image } from 'astro:assets';
       <div>
         <h4 class="text-white font-bold mb-6 text-lg">Acadêmico</h4>
         <ul class="space-y-3 text-sm">
-          <li><a href="#" class="hover:text-secondary transition-colors cursor-pointer">Educação Infantil</a></li>
-          <li><a href="#" class="hover:text-secondary transition-colors cursor-pointer">Ensino Fundamental I</a></li>
-          <li><a href="#" class="hover:text-secondary transition-colors cursor-pointer">Ensino Fundamental II</a></li>
-          <li><a href="#" class="hover:text-secondary transition-colors cursor-pointer">Atividades Extracurriculares</a></li>
+          <li>
+            <a
+              href="#"
+              class="hover:text-secondary transition-colors cursor-pointer"
+              >Educação Infantil</a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="hover:text-secondary transition-colors cursor-pointer"
+              >Ensino Fundamental I</a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="hover:text-secondary transition-colors cursor-pointer"
+              >Ensino Fundamental II</a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="hover:text-secondary transition-colors cursor-pointer"
+              >Atividades Extracurriculares</a>
+          </li>
         </ul>
       </div>
 
@@ -66,7 +176,9 @@ import { Image } from 'astro:assets';
         <ul class="space-y-4 text-sm">
           <li class="flex items-start gap-3">
             <MapPin size={20} className="text-secondary shrink-0" />
-            <span>Rua 02 qd 36 nº 51 Cohatrac II, São Luis - MA<br/>CEP: 65054-262</span>
+            <span
+              >Rua 02 qd 36 nº 51 Cohatrac II, São Luis - MA<br />CEP: 65054-262</span
+            >
           </li>
           <li class="flex items-center gap-3">
             <Phone size={20} className="text-secondary shrink-0" />
@@ -78,14 +190,19 @@ import { Image } from 'astro:assets';
           </li>
         </ul>
       </div>
-
     </div>
 
-    <div class="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+    <div
+      class="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs"
+    >
       <p>&copy; 2025 Colégio Sagrado. Todos os direitos reservados.</p>
       <div class="flex gap-4">
-        <a href="#" class="hover:text-white transition-colors cursor-pointer">Política de Privacidade</a>
-        <a href="#" class="hover:text-white transition-colors cursor-pointer">Termos de Uso</a>
+        <a href="#" class="hover:text-white transition-colors cursor-pointer"
+          >Política de Privacidade</a
+        >
+        <a href="#" class="hover:text-white transition-colors cursor-pointer"
+          >Termos de Uso</a
+        >
       </div>
     </div>
   </div>
