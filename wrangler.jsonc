@@ -5,5 +5,11 @@
   "compatibility_date": "2026-05-18",
   "assets": {
     "directory": "./dist"
-  }
+  },
+  "send_email": [
+    {
+      "name": "EMAIL",
+      "destination_address": "colegio.cscj@gmail.com"
+    }
+  ]
 }

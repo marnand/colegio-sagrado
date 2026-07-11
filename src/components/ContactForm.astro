@@ -1,6 +1,4 @@
 ---
-
-
 const contactItems = [
   {
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
@@ -175,6 +173,18 @@ const segments = [
             ></textarea>
           </div>
 
+          <!-- Honeypot -->
+          <div class="sr-only" aria-hidden="true">
+            <label for="cf-hp">Não preencha este campo</label>
+            <input
+              id="cf-hp"
+              name="hp"
+              type="text"
+              tabindex="-1"
+              autocomplete="off"
+            />
+          </div>
+
           <!-- Submit -->
           <button
             type="submit"
@@ -251,7 +261,21 @@ const segments = [
         "hidden mt-4 p-4 bg-green-50 border border-green-200 rounded-xl text-green-800 text-sm";
       successMsg.innerHTML =
         '<p class="font-semibold">Mensagem enviada com sucesso!</p><p>Entraremos em contato em breve.</p>';
-      form.insertBefore(successMsg, submitBtn.parentNode);
+      form.insertBefore(successMsg, submitBtn);
+
+      const errorMsg = document.createElement("div");
+      errorMsg.className =
+        "hidden mt-4 p-4 bg-red-50 border border-red-200 rounded-xl text-red-800 text-sm";
+      errorMsg.innerHTML =
+        '<p class="font-semibold">Não foi possível enviar.</p><p>Tente novamente mais tarde.</p>';
+      form.insertBefore(errorMsg, submitBtn);
+
+      const rateLimitMsg = document.createElement("div");
+      rateLimitMsg.className =
+        "hidden mt-4 p-4 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-sm";
+      rateLimitMsg.innerHTML =
+        '<p class="font-semibold">Muitas tentativas.</p><p>Por favor, aguarde um pouco antes de enviar novamente.</p>';
+      form.insertBefore(rateLimitMsg, submitBtn);
 
       function showError(input, message) {
         let error = input.parentNode.querySelector(".error-msg");
@@ -275,7 +299,7 @@ const segments = [
         return digits.length >= 10 && digits.length <= 11;
       }
 
-      form.addEventListener("submit", function (e) {
+      form.addEventListener("submit", async function (e) {
         e.preventDefault();
         let hasError = false;
 
@@ -283,11 +307,17 @@ const segments = [
         const phone = form.querySelector("#cf-phone");
         const email = form.querySelector("#cf-email");
         const segment = form.querySelector("#cf-segment");
+        const message = form.querySelector("#cf-message");
+        const hp = form.querySelector("#cf-hp");
 
         clearError(name);
         clearError(phone);
         clearError(segment);
         if (email) clearError(email);
+
+        successMsg.classList.add("hidden");
+        errorMsg.classList.add("hidden");
+        rateLimitMsg.classList.add("hidden");
 
         if (!name.value.trim()) {
           showError(name, "Por favor, informe seu nome completo.");
@@ -323,15 +353,78 @@ const segments = [
         submitBtn.textContent = "Enviando...";
         submitBtn.classList.add("opacity-75", "cursor-not-allowed");
 
-        // Simulate submission — replace with real fetch when backend is ready
-        setTimeout(function () {
+        try {
+          const res = await fetch("/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              nome: name.value.trim(),
+              telefone: phone.value.trim(),
+              email: email ? email.value.trim() : "",
+              segmento: segment.value,
+              mensagem: message ? message.value.trim() : "",
+              _hp: hp ? hp.value : "",
+            }),
+          });
+
+          const data = await res.json();
+
           submitBtn.disabled = false;
           submitBtn.textContent = "Enviar Mensagem";
           submitBtn.classList.remove("opacity-75", "cursor-not-allowed");
-          successMsg.classList.remove("hidden");
-          form.reset();
-          successMsg.scrollIntoView({ behavior: "smooth", block: "center" });
-        }, 1500);
+
+          if (res.ok) {
+            successMsg.classList.remove("hidden");
+            form.reset();
+            successMsg.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+            return;
+          }
+
+          if (res.status === 400 && data.field) {
+            const fieldMap = {
+              nome: name,
+              telefone: phone,
+              email: email,
+              segmento: segment,
+            };
+            const target = fieldMap[data.field];
+            if (target) {
+              showError(target, data.error);
+              target.scrollIntoView({ behavior: "smooth", block: "center" });
+            } else {
+              errorMsg.querySelector("p:last-child").textContent =
+                data.error || "Verifique os dados e tente novamente.";
+              errorMsg.classList.remove("hidden");
+              errorMsg.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+            return;
+          }
+
+          if (res.status === 429) {
+            rateLimitMsg.classList.remove("hidden");
+            rateLimitMsg.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+            return;
+          }
+
+          errorMsg.querySelector("p:last-child").textContent =
+            data.error || "Tente novamente mais tarde.";
+          errorMsg.classList.remove("hidden");
+          errorMsg.scrollIntoView({ behavior: "smooth", block: "center" });
+        } catch {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Enviar Mensagem";
+          submitBtn.classList.remove("opacity-75", "cursor-not-allowed");
+          errorMsg.querySelector("p:last-child").textContent =
+            "Erro de conexão. Tente novamente.";
+          errorMsg.classList.remove("hidden");
+          errorMsg.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
       });
     })();
   </script>
