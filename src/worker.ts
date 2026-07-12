@@ -1,4 +1,4 @@
-import type { PagesFunction } from "@cloudflare/workers-types";
+/// <reference types="@cloudflare/workers-types" />
 
 interface Env {
   EMAIL: {
@@ -9,6 +9,7 @@ interface Env {
       text: string;
     }): Promise<{ messageId: string }>;
   };
+  ASSETS: Fetcher;
 }
 
 interface ContactBody {
@@ -30,8 +31,6 @@ const ALLOWED_SEGMENTS = [
 const DESTINATION_EMAIL = "colegio.cscj@gmail.com";
 const RATE_LIMIT_MAX = 5;
 
-// Simple in-memory rate limiter. For a more robust solution across multiple
-// Worker instances, replace this with Cloudflare KV in production.
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 
 function getClientIP(request: Request): string {
@@ -74,18 +73,26 @@ function jsonResponse(
   });
 }
 
-export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const { request, env } = context;
+function corsPreflight(): Response {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
+}
 
-  // CORS preflight support for local dev / future use
-  if (request.method === "OPTIONS") {
-    return new Response(null, {
-      status: 204,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
-      },
+async function handleContact(
+  request: Request,
+  env: Env,
+): Promise<Response> {
+  if (request.method === "OPTIONS") return corsPreflight();
+  if (request.method !== "POST") {
+    return new Response("Method Not Allowed", {
+      status: 405,
+      headers: { Allow: "POST, OPTIONS" },
     });
   }
 
@@ -100,19 +107,17 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   let body: ContactBody;
   try {
-    body = await request.json<ContactBody>();
+    body = (await request.json()) as ContactBody;
   } catch {
     return jsonResponse({ error: "Corpo da requisição inválido." }, 400);
   }
 
   const { nome, telefone, email, segmento, mensagem, _hp } = body;
 
-  // Honeypot
   if (_hp && _hp.trim() !== "") {
     return jsonResponse({ error: "Requisição rejeitada." }, 400);
   }
 
-  // Validate nome
   const nomeTrimmed = (nome || "").trim();
   if (!nomeTrimmed) {
     return jsonResponse(
@@ -127,7 +132,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     );
   }
 
-  // Validate telefone
   const telefoneTrimmed = (telefone || "").trim();
   if (!telefoneTrimmed) {
     return jsonResponse(
@@ -146,7 +150,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     );
   }
 
-  // Validate segmento
   const segmentoTrimmed = (segmento || "").trim();
   if (!segmentoTrimmed) {
     return jsonResponse(
@@ -157,16 +160,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       400,
     );
   }
-  if (
-    !(ALLOWED_SEGMENTS as readonly string[]).includes(segmentoTrimmed)
-  ) {
+  if (!(ALLOWED_SEGMENTS as readonly string[]).includes(segmentoTrimmed)) {
     return jsonResponse(
       { error: "Segmento de interesse inválido.", field: "segmento" },
       400,
     );
   }
 
-  // Validate email (optional)
   const emailTrimmed = (email || "").trim();
   if (emailTrimmed && !emailTrimmed.includes("@")) {
     return jsonResponse(
@@ -208,15 +208,16 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
 
   return jsonResponse({ success: true }, 200);
-};
+}
 
-export const onRequestOptions: PagesFunction<Env> = async () => {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
-  });
-};
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const { pathname } = new URL(request.url);
+
+    if (pathname === "/api/contact") {
+      return handleContact(request, env);
+    }
+
+    return env.ASSETS.fetch(request);
+  },
+} satisfies ExportedHandler<Env>;
