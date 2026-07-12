@@ -28,7 +28,8 @@ const ALLOWED_SEGMENTS = [
   "Ainda não sei",
 ] as const;
 
-const DESTINATION_EMAIL = "colegio.cscj@gmail.com";
+// const DESTINATION_EMAIL = "colegio.cscj@gmail.com";
+const DESTINATION_EMAIL = "marnand.dev@gmail.com";
 const RATE_LIMIT_MAX = 5;
 
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
@@ -179,7 +180,8 @@ async function handleContact(
   const timestamp = new Date().toISOString();
 
   const hostname = new URL(request.url).hostname;
-  const fromEmail = `formulario@${hostname}`;
+  // const fromEmail = `formulario@${hostname}`;
+  const fromEmail = `marnandf@gmail.com`;
 
   const emailBody =
     `Novo agendamento de visita recebido pelo site CSCJ:\n\n` +
