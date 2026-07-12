@@ -27,7 +27,6 @@ pnpm-debug.log*
 .vscode/
 .impeccable/
 
-package-lock.json
 yarn.lock
 
 FULLSTACK.md
