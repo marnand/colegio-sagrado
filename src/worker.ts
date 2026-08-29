@@ -142,6 +142,7 @@ async function sendViaResend(
     }
 
     const data = (await response.json()) as { id: string };
+    console.log(JSON.stringify(payload))
     return { ok: true, id: data.id };
   } catch {
     console.error("Resend request failed");
