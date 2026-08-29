@@ -142,7 +142,6 @@ async function sendViaResend(
     }
 
     const data = (await response.json()) as { id: string };
-    console.log(JSON.stringify(payload))
     return { ok: true, id: data.id };
   } catch {
     console.error("Resend request failed");
@@ -330,7 +329,7 @@ async function handleContact(
 
   if (!sendResult.ok) {
     return jsonResponse(
-      { error: "Erro ao enviar. Tente novamente. -" },
+      { error: "Erro ao enviar. Tente novamente." },
       500,
       origin,
     );
