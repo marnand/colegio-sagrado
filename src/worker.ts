@@ -329,7 +329,7 @@ async function handleContact(
 
   if (!sendResult.ok) {
     return jsonResponse(
-      { error: "Erro ao enviar. Tente novamente." },
+      { error: "Erro ao enviar. Tente novamente. -" },
       500,
       origin,
     );
