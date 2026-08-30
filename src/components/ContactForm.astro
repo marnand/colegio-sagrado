@@ -6,7 +6,7 @@ const contactItems = [
     value: "Rua 02 qd 36 nº 51 Cohatrac II, São Luis - MA",
   },
   {
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-2 .9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
     label: "E-mail",
     value: "colegio.cscj@gmail.com",
   },
@@ -28,10 +28,15 @@ const segments = [
   "Ensino Fundamental II (11–14 anos)",
   "Ainda não sei",
 ];
+
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
+const successRedirect =
+  import.meta.env.PUBLIC_WEB3FORMS_REDIRECT ?? "/obrigado/";
+const subjectLine =
+  import.meta.env.PUBLIC_WEB3FORMS_SUBJECT ?? "Novo contato via site do Colégio Sagrado";
 ---
 
 <section id="contato" class="py-24 bg-[#FAF8F5] relative overflow-hidden">
-  <!-- Background accent -->
   <div
     class="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-primary to-transparent opacity-20"
     aria-hidden="true"
@@ -39,7 +44,6 @@ const segments = [
   </div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Heading -->
     <div class="text-center mb-16">
       <span
         class="text-primary font-semibold tracking-wider text-sm uppercase mb-3 block"
@@ -60,20 +64,30 @@ const segments = [
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
-      <!-- Form card — 3 cols -->
       <div
         class="lg:col-span-3 bg-white rounded-2xl shadow-xl p-8 md:p-10 border border-gray-100"
       >
         <h3 class="font-serif text-2xl font-bold text-foreground mb-8">
-          Agende uma visita
+          Solicite contato ou agende uma visita
         </h3>
 
         <form
-          aria-label="Formulário de agendamento de visita"
+          action="https://api.web3forms.com/submit"
+          method="POST"
+          aria-label="Formulário de contato do Colégio Sagrado"
           class="space-y-5"
-          novalidate
         >
-          <!-- Name + Phone row -->
+          <input type="hidden" name="access_key" value={accessKey} />
+          <input type="hidden" name="subject" value={subjectLine} />
+          <input type="hidden" name="from_name" value="Site Colégio Sagrado" />
+          <input type="hidden" name="redirect" value={successRedirect} />
+          <input
+            type="checkbox"
+            name="botcheck"
+            class="hidden"
+            style="display: none;"
+          />
+
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
               <label
@@ -89,6 +103,8 @@ const segments = [
                 name="name"
                 type="text"
                 required
+                minlength="2"
+                maxlength="200"
                 autocomplete="name"
                 placeholder="Seu nome completo"
                 class="w-full px-4 py-3 rounded-lg border border-gray-200 text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
@@ -109,6 +125,10 @@ const segments = [
                 name="phone"
                 type="tel"
                 required
+                minlength="10"
+                maxlength="20"
+                pattern="[0-9 ()+\-]{10,20}"
+                inputmode="tel"
                 autocomplete="tel"
                 placeholder="(98) 9 0000-0000"
                 class="w-full px-4 py-3 rounded-lg border border-gray-200 text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
@@ -116,7 +136,6 @@ const segments = [
             </div>
           </div>
 
-          <!-- Email -->
           <div>
             <label
               for="cf-email"
@@ -128,13 +147,13 @@ const segments = [
               id="cf-email"
               name="email"
               type="email"
+              maxlength="320"
               autocomplete="email"
               placeholder="seu@email.com"
               class="w-full px-4 py-3 rounded-lg border border-gray-200 text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
             />
           </div>
 
-          <!-- Segment select -->
           <div>
             <label
               for="cf-segment"
@@ -156,7 +175,49 @@ const segments = [
             </select>
           </div>
 
-          <!-- Message -->
+          <fieldset class="border border-gray-200 rounded-lg p-4">
+            <legend class="px-2 text-sm font-semibold text-gray-700">
+              Preferência de visita (opcional)
+            </legend>
+            <p class="text-xs text-gray-500 mb-4">
+              A data e o horário abaixo são uma preferência. A escola confirmará
+              o agendamento pelo telefone ou WhatsApp informados.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label
+                  for="cf-visit-date"
+                  class="block text-sm font-semibold text-gray-700 mb-1.5"
+                >
+                  Data desejada
+                </label>
+                <input
+                  id="cf-visit-date"
+                  name="visit_date"
+                  type="date"
+                  class="w-full px-4 py-3 rounded-lg border border-gray-200 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
+                />
+              </div>
+              <div>
+                <label
+                  for="cf-visit-time"
+                  class="block text-sm font-semibold text-gray-700 mb-1.5"
+                >
+                  Horário preferido
+                </label>
+                <input
+                  id="cf-visit-time"
+                  name="visit_time"
+                  type="time"
+                  min="08:00"
+                  max="17:00"
+                  step="1800"
+                  class="w-full px-4 py-3 rounded-lg border border-gray-200 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
+                />
+              </div>
+            </div>
+          </fieldset>
+
           <div>
             <label
               for="cf-message"
@@ -168,24 +229,14 @@ const segments = [
               id="cf-message"
               name="message"
               rows="4"
+              maxlength="2000"
               placeholder="Dúvidas sobre matrículas, horários ou visitas?"
               class="w-full px-4 py-3 rounded-lg border border-gray-200 text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors resize-none"
             ></textarea>
           </div>
 
-          <!-- Honeypot -->
-          <div class="sr-only" aria-hidden="true">
-            <label for="cf-hp">Não preencha este campo</label>
-            <input
-              id="cf-hp"
-              name="hp"
-              type="text"
-              tabindex="-1"
-              autocomplete="off"
-            />
-          </div>
+          <div class="h-captcha" data-captcha="true"></div>
 
-          <!-- Submit -->
           <button
             type="submit"
             class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-primary/25 transition-all hover:scale-[1.02] tracking-wider uppercase text-sm cursor-pointer"
@@ -194,9 +245,10 @@ const segments = [
           </button>
 
           <p class="text-xs text-gray-400 text-center">
-            Ao enviar, você concorda com nossa{" "}
+            Ao enviar, você concorda com o tratamento dos dados pela escola e
+            pelo serviço de formulário{" "}
             <a
-              href="#"
+              href="/privacidade/"
               class="underline hover:text-primary transition-colors cursor-pointer"
               >Política de Privacidade</a
             >.
@@ -204,9 +256,7 @@ const segments = [
         </form>
       </div>
 
-      <!-- Info + mascote column — 2 cols -->
       <div class="lg:col-span-2 flex flex-col gap-5">
-        <!-- Contact info card -->
         <div class="bg-primary rounded-2xl p-8 text-white">
           <h3 class="font-serif text-xl font-bold mb-6">
             Informações de Contato
@@ -231,7 +281,6 @@ const segments = [
           </ul>
         </div>
 
-        <!-- Google Maps -->
         <div class="w-full h-full min-h-80 rounded-2xl overflow-hidden shadow-xl border border-gray-100">
           <iframe
             src="https://www.google.com/maps?q=Rua+02+qd+36+51+Cohatrac+II+Sao+Luis+MA&output=embed"
@@ -248,184 +297,5 @@ const segments = [
     </div>
   </div>
 
-  <script>
-    (function () {
-      const form = document.querySelector(
-        'form[aria-label="Formulário de agendamento de visita"]',
-      );
-      if (!form) return;
-
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const successMsg = document.createElement("div");
-      successMsg.className =
-        "hidden mt-4 p-4 bg-green-50 border border-green-200 rounded-xl text-green-800 text-sm";
-      successMsg.innerHTML =
-        '<p class="font-semibold">Mensagem enviada com sucesso!</p><p>Entraremos em contato em breve.</p>';
-      form.insertBefore(successMsg, submitBtn);
-
-      const errorMsg = document.createElement("div");
-      errorMsg.className =
-        "hidden mt-4 p-4 bg-red-50 border border-red-200 rounded-xl text-red-800 text-sm";
-      errorMsg.innerHTML =
-        '<p class="font-semibold">Não foi possível enviar.</p><p>Tente novamente mais tarde.</p>';
-      form.insertBefore(errorMsg, submitBtn);
-
-      const rateLimitMsg = document.createElement("div");
-      rateLimitMsg.className =
-        "hidden mt-4 p-4 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-sm";
-      rateLimitMsg.innerHTML =
-        '<p class="font-semibold">Muitas tentativas.</p><p>Por favor, aguarde um pouco antes de enviar novamente.</p>';
-      form.insertBefore(rateLimitMsg, submitBtn);
-
-      function showError(input, message) {
-        let error = input.parentNode.querySelector(".error-msg");
-        if (!error) {
-          error = document.createElement("p");
-          error.className = "error-msg text-primary text-xs mt-1";
-          input.parentNode.appendChild(error);
-        }
-        error.textContent = message;
-        input.classList.add("border-primary");
-      }
-
-      function clearError(input) {
-        const error = input.parentNode.querySelector(".error-msg");
-        if (error) error.remove();
-        input.classList.remove("border-primary");
-      }
-
-      function validatePhone(phone) {
-        const digits = phone.replace(/\D/g, "");
-        return digits.length >= 10 && digits.length <= 11;
-      }
-
-      form.addEventListener("submit", async function (e) {
-        e.preventDefault();
-        let hasError = false;
-
-        const name = form.querySelector("#cf-name");
-        const phone = form.querySelector("#cf-phone");
-        const email = form.querySelector("#cf-email");
-        const segment = form.querySelector("#cf-segment");
-        const message = form.querySelector("#cf-message");
-        const hp = form.querySelector("#cf-hp");
-
-        clearError(name);
-        clearError(phone);
-        clearError(segment);
-        if (email) clearError(email);
-
-        successMsg.classList.add("hidden");
-        errorMsg.classList.add("hidden");
-        rateLimitMsg.classList.add("hidden");
-
-        if (!name.value.trim()) {
-          showError(name, "Por favor, informe seu nome completo.");
-          hasError = true;
-        }
-
-        if (!phone.value.trim()) {
-          showError(phone, "Por favor, informe seu telefone.");
-          hasError = true;
-        } else if (!validatePhone(phone.value)) {
-          showError(phone, "Por favor, informe um telefone válido com DDD.");
-          hasError = true;
-        }
-
-        if (!segment.value) {
-          showError(segment, "Por favor, selecione um segmento de interesse.");
-          hasError = true;
-        }
-
-        if (email && email.value.trim() && !email.value.includes("@")) {
-          showError(email, "Por favor, informe um e-mail válido.");
-          hasError = true;
-        }
-
-        if (hasError) {
-          const firstError = form.querySelector(".error-msg");
-          if (firstError)
-            firstError.scrollIntoView({ behavior: "smooth", block: "center" });
-          return;
-        }
-
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Enviando...";
-        submitBtn.classList.add("opacity-75", "cursor-not-allowed");
-
-        try {
-          const res = await fetch("/api/contact", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              nome: name.value.trim(),
-              telefone: phone.value.trim(),
-              email: email ? email.value.trim() : "",
-              segmento: segment.value,
-              mensagem: message ? message.value.trim() : "",
-              _hp: hp ? hp.value : "",
-            }),
-          });
-
-          const data = await res.json();
-
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Enviar Mensagem";
-          submitBtn.classList.remove("opacity-75", "cursor-not-allowed");
-
-          if (res.ok) {
-            successMsg.classList.remove("hidden");
-            form.reset();
-            successMsg.scrollIntoView({
-              behavior: "smooth",
-              block: "center",
-            });
-            return;
-          }
-
-          if (res.status === 400 && data.field) {
-            const fieldMap = {
-              nome: name,
-              telefone: phone,
-              email: email,
-              segmento: segment,
-            };
-            const target = fieldMap[data.field];
-            if (target) {
-              showError(target, data.error);
-              target.scrollIntoView({ behavior: "smooth", block: "center" });
-            } else {
-              errorMsg.querySelector("p:last-child").textContent =
-                data.error || "Verifique os dados e tente novamente.";
-              errorMsg.classList.remove("hidden");
-              errorMsg.scrollIntoView({ behavior: "smooth", block: "center" });
-            }
-            return;
-          }
-
-          if (res.status === 429) {
-            rateLimitMsg.classList.remove("hidden");
-            rateLimitMsg.scrollIntoView({
-              behavior: "smooth",
-              block: "center",
-            });
-            return;
-          }
-
-          errorMsg.querySelector("p:last-child").textContent =
-            data.error || "Tente novamente mais tarde.";
-          errorMsg.classList.remove("hidden");
-          errorMsg.scrollIntoView({ behavior: "smooth", block: "center" });
-        } catch {
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Enviar Mensagem";
-          submitBtn.classList.remove("opacity-75", "cursor-not-allowed");
-          errorMsg.querySelector("p:last-child").textContent =
-            "Erro de conexão. Tente novamente.";
-          errorMsg.classList.remove("hidden");
-          errorMsg.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-      });
-    })();
-  </script>
+  <script src="https://web3forms.com/client/script.js" async defer></script>
 </section>

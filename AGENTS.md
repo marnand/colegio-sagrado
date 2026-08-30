@@ -19,6 +19,23 @@ Static institutional landing page for a Brazilian Catholic school. Single-page s
 
 **No test, lint, or typecheck scripts are defined.** `npm run build` is the only verification step.
 
+## Form Submission (Web3Forms)
+
+The contact form submits natively via HTML `POST` to `https://api.web3forms.com/submit`. There is no custom fetch handler and no backend endpoint in this repository.
+
+- The Web3Forms access key is exposed in the public HTML by design. It is injected at build time from `PUBLIC_WEB3FORMS_ACCESS_KEY` (Astro exposes `PUBLIC_*` variables to the client bundle). The value is **not a secret**.
+- `PUBLIC_WEB3FORMS_REDIRECT` and `PUBLIC_WEB3FORMS_SUBJECT` configure the post-submit redirect and the e-mail subject. Defaults: `/obrigado/` and `Novo contato via site do Colégio Sagrado`.
+- hCaptcha is enabled in the Web3Forms dashboard for the form. The site loads the official `web3forms.com/client/script.js`.
+- Date and time fields are visit preferences only; the school confirms by phone or WhatsApp.
+
+## Deployment (Cloudflare Pages)
+
+CI/CD publishes `dist/` to Cloudflare Pages via `cloudflare/wrangler-action@v3` with `wrangler pages deploy dist`. There is no Worker, no `wrangler.jsonc`, and no Resend integration in the active codebase.
+
+- Required GitHub secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `PUBLIC_WEB3FORMS_ACCESS_KEY`.
+- Required GitHub variables: `CLOUDFLARE_PAGES_PROJECT`, optional `PUBLIC_WEB3FORMS_REDIRECT` and `PUBLIC_WEB3FORMS_SUBJECT`.
+- Historical Resend/Worker plans (`docs/plans/2026-07-12-001-feat-resend-email-migration-plan.md`, `docs/brainstorms/switch-form-email-to-resend-requirements.md`, `FULLSTACK.md`, `FORM-EMAIL-PLAN.md`) are superseded and must not be treated as instructions.
+
 ## Architecture
 
 - **Entry**: `src/pages/index.astro` — single page importing all section components.

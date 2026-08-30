@@ -24,6 +24,23 @@ Landing page institucional do Colégio Sagrado, escola católica com mais de 25 
 
 > **Nota:** Não há scripts de teste, lint ou typecheck. O comando `npm run build` é a única etapa de verificação.
 
+## Formulário de contato (Web3Forms)
+
+O formulário de contato é um POST HTML nativo para `https://api.web3forms.com/submit`, com hCaptcha gratuito ativado pelo dashboard da conta. Não há backend neste repositório.
+
+- A chave do Web3Forms é pública e injetada no build via `PUBLIC_WEB3FORMS_ACCESS_KEY` (e não é um segredo de servidor).
+- Variáveis opcionais: `PUBLIC_WEB3FORMS_REDIRECT` (padrão `/obrigado/`) e `PUBLIC_WEB3FORMS_SUBJECT`.
+- Data e horário são preferências; a escola confirma a visita por telefone ou WhatsApp.
+- Há uma página `/privacidade/` provisória que precisa do texto definitivo antes do lançamento em produção.
+
+## Deploy (Cloudflare Pages)
+
+O deploy publica o diretório `dist/` no Cloudflare Pages via GitHub Actions (`cloudflare/wrangler-action@v3` + `wrangler pages deploy dist`).
+
+- **Secrets** do repositório: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `PUBLIC_WEB3FORMS_ACCESS_KEY`.
+- **Variables** do repositório: `CLOUDFLARE_PAGES_PROJECT` (obrigatório), `PUBLIC_WEB3FORMS_REDIRECT` e `PUBLIC_WEB3FORMS_SUBJECT` (opcionais).
+- Sem Worker, sem `wrangler.jsonc` e sem credenciais do Resend.
+
 ## Estrutura
 
 ```

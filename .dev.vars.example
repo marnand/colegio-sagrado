@@ -1,7 +1,0 @@
-# Copy this file to .dev.vars and fill in real values
-# Wrangler loads .dev.vars automatically when running `npx wrangler dev`
-
-RESEND_API_KEY=re_xxx
-FROM_EMAIL=onboarding@resend.dev
-NOTIFICATION_EMAIL=colegio.cscj@gmail.com
-SITE_ORIGIN=http://localhost:8787

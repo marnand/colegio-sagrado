@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <main
+    id="main-content"
+    class="min-h-screen flex items-center justify-center bg-[#FAF8F5] px-4 py-24"
+  >
+    <div class="max-w-2xl text-center">
+      <span
+        class="text-primary font-semibold tracking-wider text-sm uppercase mb-3 block"
+        >Mensagem recebida</span
+      >
+      <h1
+        class="font-serif text-4xl md:text-5xl font-bold text-foreground leading-tight mb-4"
+      >
+        Recebemos seu <span class="text-primary">contato</span>
+      </h1>
+      <p class="text-gray-600 text-lg leading-relaxed font-light mb-8">
+        Sua mensagem foi enviada com sucesso. Caso tenha informado preferência
+        de data e horário para visita, eles serão considerados uma solicitação;
+        a escola confirmará o agendamento diretamente pelo telefone ou
+        WhatsApp informados.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a
+          href="/#contato"
+          class="inline-flex items-center justify-center bg-primary hover:bg-primary-dark text-white font-bold py-3 px-6 rounded-full shadow-lg shadow-primary/25 transition-all hover:scale-[1.02] tracking-wider uppercase text-sm"
+        >
+          Enviar outra mensagem
+        </a>
+        <a
+          href="/"
+          class="inline-flex items-center justify-center bg-white border border-gray-200 text-gray-700 hover:border-primary hover:text-primary font-bold py-3 px-6 rounded-full transition-all tracking-wider uppercase text-sm"
+        >
+          Voltar à página inicial
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>
