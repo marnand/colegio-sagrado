@@ -33,13 +33,16 @@ O formulário de contato é um POST HTML nativo para `https://api.web3forms.com/
 - Data e horário são preferências; a escola confirma a visita por telefone ou WhatsApp.
 - Há uma página `/privacidade/` provisória que precisa do texto definitivo antes do lançamento em produção.
 
-## Deploy (Cloudflare Pages)
+## Deploy (Cloudflare Workers)
 
-O deploy publica o diretório `dist/` no Cloudflare Pages via GitHub Actions (`cloudflare/wrangler-action@v3` + `wrangler pages deploy dist`).
+O deploy é feito automaticamente pelo build system do Cloudflare Workers em pushes para `main`: roda `npm run build` e depois `npx wrangler deploy` usando `wrangler.jsonc`.
 
-- **Secrets** do repositório: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `PUBLIC_WEB3FORMS_ACCESS_KEY`.
-- **Variables** do repositório: `CLOUDFLARE_PAGES_PROJECT` (obrigatório), `PUBLIC_WEB3FORMS_REDIRECT` e `PUBLIC_WEB3FORMS_SUBJECT` (opcionais).
-- Sem Worker, sem `wrangler.jsonc` e sem credenciais do Resend.
+- **Nome do Worker:** `colegio-sagrado`
+- **Variáveis de ambiente no Cloudflare** (configurar em Workers & Pages > `colegio-sagrado` > Settings > Environment variables para estarem disponíveis no build):
+  - `PUBLIC_WEB3FORMS_ACCESS_KEY` — obrigatória. É pública e injetada no HTML; **não é um segredo**.
+  - `PUBLIC_WEB3FORMS_REDIRECT` e `PUBLIC_WEB3FORMS_SUBJECT` — opcionais.
+- Não há workflow do GitHub Actions para deploy.
+- Não há Worker adicional, nem credenciais do Resend.
 
 ## Estrutura
 

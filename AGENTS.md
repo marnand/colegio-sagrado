@@ -34,8 +34,10 @@ The site is deployed as a Cloudflare Worker. The build is triggered automaticall
 
 - Worker name: `colegio-sagrado`
 - Entrypoint: `@astrojs/cloudflare/entrypoints/server` (provided by `@astrojs/cloudflare`)
-- Required GitHub secrets (if using GitHub Actions): `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `PUBLIC_WEB3FORMS_ACCESS_KEY`.
-- Optional GitHub variables: `PUBLIC_WEB3FORMS_REDIRECT` and `PUBLIC_WEB3FORMS_SUBJECT`.
+- Required Cloudflare environment variables (configure in the Cloudflare dashboard under Workers & Pages > `colegio-sagrado` > Settings > Environment variables so they are available at build time):
+  - `PUBLIC_WEB3FORMS_ACCESS_KEY` — the Web3Forms access key. It is exposed in the public HTML by design and is **not a secret**; configure it as a plain environment variable, not as an encrypted secret.
+  - `PUBLIC_WEB3FORMS_REDIRECT` and `PUBLIC_WEB3FORMS_SUBJECT` — optional; defaults are `/obrigado/` and `Novo contato via site do Colégio Sagrado`.
+- No GitHub Actions workflow is used for deployment.
 - Historical Resend/Worker plans (`docs/plans/2026-07-12-001-feat-resend-email-migration-plan.md`, `docs/brainstorms/switch-form-email-to-resend-requirements.md`, `FULLSTACK.md`, `FORM-EMAIL-PLAN.md`) are superseded and must not be treated as instructions.
 
 ## Architecture
