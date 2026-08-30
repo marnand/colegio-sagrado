@@ -13,7 +13,6 @@ jobs:
       contents: read
     env:
       PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.PUBLIC_WEB3FORMS_ACCESS_KEY }}
-      PUBLIC_WEB3FORMS_REDIRECT: ${{ vars.PUBLIC_WEB3FORMS_REDIRECT }}
       PUBLIC_WEB3FORMS_SUBJECT: ${{ vars.PUBLIC_WEB3FORMS_SUBJECT }}
     steps:
       - name: Checkout

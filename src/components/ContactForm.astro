@@ -30,8 +30,6 @@ const segments = [
 ];
 
 const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
-const successRedirect =
-  import.meta.env.PUBLIC_WEB3FORMS_REDIRECT ?? "/obrigado/";
 const subjectLine =
   import.meta.env.PUBLIC_WEB3FORMS_SUBJECT ?? "Novo contato via site do Colégio Sagrado";
 ---
@@ -72,6 +70,7 @@ const subjectLine =
         </h3>
 
         <form
+          id="contact-form"
           action="https://api.web3forms.com/submit"
           method="POST"
           aria-label="Formulário de contato do Colégio Sagrado"
@@ -80,7 +79,6 @@ const subjectLine =
           <input type="hidden" name="access_key" value={accessKey} />
           <input type="hidden" name="subject" value={subjectLine} />
           <input type="hidden" name="from_name" value="Site Colégio Sagrado" />
-          <input type="hidden" name="redirect" value={successRedirect} />
           <input
             type="checkbox"
             name="botcheck"
@@ -175,7 +173,7 @@ const subjectLine =
             </select>
           </div>
 
-          <fieldset class="border border-gray-200 rounded-lg p-4">
+          <!-- <fieldset class="border border-gray-200 rounded-lg p-4">
             <legend class="px-2 text-sm font-semibold text-gray-700">
               Preferência de visita (opcional)
             </legend>
@@ -216,7 +214,7 @@ const subjectLine =
                 />
               </div>
             </div>
-          </fieldset>
+          </fieldset> -->
 
           <div>
             <label
@@ -237,9 +235,17 @@ const subjectLine =
 
           <div class="h-captcha" data-captcha="true"></div>
 
+          <div
+            id="form-status"
+            role="status"
+            aria-live="polite"
+            class="hidden rounded-lg px-4 py-3 text-sm font-medium text-center"
+          ></div>
+
           <button
+            id="form-submit"
             type="submit"
-            class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-primary/25 transition-all hover:scale-[1.02] tracking-wider uppercase text-sm cursor-pointer"
+            class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-primary/25 transition-all hover:scale-[1.02] tracking-wider uppercase text-sm cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
           >
             Enviar Mensagem
           </button>
@@ -298,4 +304,95 @@ const subjectLine =
   </div>
 
   <script src="https://web3forms.com/client/script.js" async defer></script>
+
+  <script>
+    (function () {
+      const form = document.getElementById("contact-form");
+      const status = document.getElementById("form-status");
+      const submitBtn = document.getElementById("form-submit");
+      const originalBtnText = submitBtn ? submitBtn.textContent : "Enviar Mensagem";
+
+      if (!form || !status || !submitBtn) return;
+
+      function showStatus(message, type) {
+        status.textContent = message;
+        status.classList.remove("hidden", "bg-green-100", "text-green-800", "bg-red-100", "text-red-800");
+
+        if (type === "success") {
+          status.classList.add("bg-green-100", "text-green-800");
+        } else {
+          status.classList.add("bg-red-100", "text-red-800");
+        }
+      }
+
+      function hideStatus() {
+        status.textContent = "";
+        status.classList.add("hidden");
+        status.classList.remove("bg-green-100", "text-green-800", "bg-red-100", "text-red-800");
+      }
+
+      function setLoading(loading) {
+        submitBtn.disabled = loading;
+        submitBtn.textContent = loading ? "Enviando..." : originalBtnText;
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        hideStatus();
+
+        const hCaptcha = form.querySelector('textarea[name="h-captcha-response"]');
+        if (hCaptcha && !hCaptcha.value) {
+          showStatus("Por favor, complete o desafio de segurança.", "error");
+          return;
+        }
+
+        setLoading(true);
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+          fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then(async (response) => {
+            const json = await response.json().catch(() => ({}));
+            if (response.ok && response.status === 200) {
+              showStatus(
+                "Mensagem enviada com sucesso! Entraremos em contato em breve.",
+                "success"
+              );
+              form.reset();
+              if (window.hcaptcha) {
+                try {
+                  window.hcaptcha.reset();
+                } catch {
+                  // ignore reset errors
+                }
+              }
+            } else {
+              console.error("[Web3Forms] Erro no envio:", json.message || response.statusText);
+              showStatus(
+                "Não foi possível enviar a mensagem. Tente novamente mais tarde.",
+                "error"
+              );
+            }
+          })
+          .catch((error) => {
+            console.error("[Web3Forms] Erro de conexão:", error);
+            showStatus(
+              "Erro de conexão. Verifique sua internet e tente novamente.",
+              "error"
+            );
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      });
+    })();
+  </script>
 </section>
