@@ -7,7 +7,7 @@ Static institutional landing page for a Brazilian Catholic school. Single-page s
 - **Stack**: Astro 6 + React 19 + Tailwind CSS 4 (via `@tailwindcss/vite`)
 - **Node**: >=22.12.0
 - **Language**: Portuguese (pt-BR)
-- **Build output**: static `dist/` (default Astro static adapter)
+- **Build output**: `dist/` via `@astrojs/cloudflare` adapter (static output with on-demand rendering support)
 
 ## Developer Commands
 
@@ -28,12 +28,14 @@ The contact form submits natively via HTML `POST` to `https://api.web3forms.com/
 - hCaptcha is enabled in the Web3Forms dashboard for the form. The site loads the official `web3forms.com/client/script.js`.
 - Date and time fields are visit preferences only; the school confirms by phone or WhatsApp.
 
-## Deployment (Cloudflare Pages)
+## Deployment (Cloudflare Workers)
 
-CI/CD publishes `dist/` to Cloudflare Pages via `cloudflare/wrangler-action@v3` with `wrangler pages deploy dist`. There is no Worker, no `wrangler.jsonc`, and no Resend integration in the active codebase.
+The site is deployed as a Cloudflare Worker. The build is triggered automatically on pushes to `main` by the Cloudflare Workers build system, which runs `npm run build` and then `npx wrangler deploy` using `wrangler.jsonc`.
 
-- Required GitHub secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `PUBLIC_WEB3FORMS_ACCESS_KEY`.
-- Required GitHub variables: `CLOUDFLARE_PAGES_PROJECT`, optional `PUBLIC_WEB3FORMS_REDIRECT` and `PUBLIC_WEB3FORMS_SUBJECT`.
+- Worker name: `colegio-sagrado`
+- Entrypoint: `@astrojs/cloudflare/entrypoints/server` (provided by `@astrojs/cloudflare`)
+- Required GitHub secrets (if using GitHub Actions): `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `PUBLIC_WEB3FORMS_ACCESS_KEY`.
+- Optional GitHub variables: `PUBLIC_WEB3FORMS_REDIRECT` and `PUBLIC_WEB3FORMS_SUBJECT`.
 - Historical Resend/Worker plans (`docs/plans/2026-07-12-001-feat-resend-email-migration-plan.md`, `docs/brainstorms/switch-form-email-to-resend-requirements.md`, `FULLSTACK.md`, `FORM-EMAIL-PLAN.md`) are superseded and must not be treated as instructions.
 
 ## Architecture
@@ -43,6 +45,7 @@ CI/CD publishes `dist/` to Cloudflare Pages via `cloudflare/wrangler-action@v3` 
 - **Components**: Mostly `.astro` files; interactive ones (`Header.tsx`, `AcademicJourney.tsx`) use React with `client:load`.
 - **Assets**: `public/` for static files served as-is (favicon, opengraph.webp, hero.webp); `src/assets/` for images imported in components (e.g., `mascote.svg`).
 - **Styling**: `src/global.css` — Tailwind v4 entry with `@theme inline`, CSS variables, custom `@keyframes marquee`, and `prefers-reduced-motion` overrides.
+- **Adapter**: `@astrojs/cloudflare` for Cloudflare Workers deployment.
 
 ## Tailwind CSS 4 Quirks
 

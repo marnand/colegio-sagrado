@@ -28,6 +28,9 @@ pnpm-debug.log*
 .vscode/
 .impeccable/
 
+# wrangler local state
+.wrangler/
+
 yarn.lock
 
 FULLSTACK.md
