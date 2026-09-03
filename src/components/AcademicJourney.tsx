@@ -41,9 +41,9 @@ export default function AcademicJourney() {
         <div className='bg-gray-50 rounded-2xl overflow-hidden shadow-lg border border-gray-100'>
           {activeTab === 'pre' && (
             <div className='grid grid-cols-1 lg:grid-cols-2 animate-in fade-in zoom-in-95 duration-500'>
-              <div className='h-100 lg:h-auto relative'>
+              <div className='h-100 relative'>
                 <img
-                  src='https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=800&q=80'
+                  src='interacoes.webp'
                   alt='Crianças pequenas em atividade lúdica de alfabetização na sala de Pré-Escola'
                   loading='lazy'
                   width='800'

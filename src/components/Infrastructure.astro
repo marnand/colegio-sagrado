@@ -1,43 +1,43 @@
 ---
-import { Building, BookOpen, Cpu, Blocks, Monitor, School } from 'lucide-react';
-import { Image } from 'astro:assets';
+import { Building, BookOpen, Cpu, Blocks, Monitor, School } from "lucide-react";
+import { Image } from "astro:assets";
 
 const spaces = [
   {
-    title: 'Quadra poliesportiva coberta',
+    title: "Quadra poliesportiva coberta",
     icon: Building,
-    img: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80',
-    imgAlt: 'Quadra poliesportiva coberta',
+    img: "/quadra.webp",
+    imgAlt: "Quadra poliesportiva coberta",
   },
   {
-    title: 'Biblioteca',
+    title: "Biblioteca",
     icon: BookOpen,
-    img: '/biblioteca.webp',
-    imgAlt: 'Biblioteca escolar',
+    img: "/biblioteca.webp",
+    imgAlt: "Biblioteca escolar",
   },
   {
-    title: 'Robótica e Espaço Maker',
+    title: "Robótica e Espaço Maker",
     icon: Cpu,
-    img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80',
-    imgAlt: 'Espaço maker e robótica',
+    img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80",
+    imgAlt: "Espaço maker e robótica",
   },
   {
-    title: 'Brinquedoteca',
+    title: "Brinquedoteca",
     icon: Blocks,
-    img: '/brinquedoteca.webp',
-    imgAlt: 'Brinquedoteca',
+    img: "/brinquedoteca.webp",
+    imgAlt: "Brinquedoteca",
   },
   {
-    title: 'Recursos tecnológicos',
+    title: "Recursos tecnológicos",
     icon: Monitor,
-    img: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80',
-    imgAlt: 'Recursos tecnológicos',
+    img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80",
+    imgAlt: "Recursos tecnológicos",
   },
   {
-    title: 'Espaço inteligente - Socioemocional',
+    title: "Espaço inteligente - Socioemocional",
     icon: School,
-    img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80',
-    imgAlt: 'Espaço inteligente - Socioemocional',
+    img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80",
+    imgAlt: "Espaço inteligente - Socioemocional",
   },
 ];
 ---
@@ -45,39 +45,48 @@ const spaces = [
 <section id="infraestrutura" class="py-24 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16">
-      <h2 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+      <h2
+        class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4"
+      >
         Espaços que favorecem a aprendizagem
       </h2>
       <p class="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-        Nossa estrutura foi planejada para proporcionar conforto, segurança e experiências significativas de aprendizagem em todas as etapas escolares.
+        Nossa estrutura foi planejada para proporcionar conforto, segurança e
+        experiências significativas de aprendizagem em todas as etapas
+        escolares.
       </p>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {spaces.map((space) => {
-        const Icon = space.icon;
-        return (
-          <div class="group relative overflow-hidden rounded-xl border border-gray-200 hover:border-primary transition-colors duration-300 min-h-64">
-            <Image
-              src={space.img}
-              alt={space.imgAlt}
-              loading="lazy"
-              width="800"
-              height="420"
-              class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700"
-            />
-            <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>
-            <div aria-hidden="true" class="absolute top-6 left-6 p-3 bg-primary/80 rounded-full text-white">
-              <Icon size={24} />
+      {
+        spaces.map((space) => {
+          const Icon = space.icon;
+          return (
+            <div class="group relative overflow-hidden rounded-xl border border-gray-200 hover:border-primary transition-colors duration-300 min-h-64">
+              <Image
+                src={space.img}
+                alt={space.imgAlt}
+                loading="lazy"
+                width="800"
+                height="420"
+                class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700"
+              />
+              <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
+              <div
+                aria-hidden="true"
+                class="absolute top-6 left-6 p-3 bg-primary/80 rounded-full text-white"
+              >
+                <Icon size={24} />
+              </div>
+              <div class="absolute bottom-0 left-0 right-0 p-6">
+                <h3 class="font-serif text-xl font-bold text-white">
+                  {space.title}
+                </h3>
+              </div>
             </div>
-            <div class="absolute bottom-0 left-0 right-0 p-6">
-              <h3 class="font-serif text-xl font-bold text-white">
-                {space.title}
-              </h3>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })
+      }
     </div>
   </div>
 </section>
