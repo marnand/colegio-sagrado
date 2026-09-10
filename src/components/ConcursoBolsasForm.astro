@@ -1,0 +1,327 @@
+---
+type FormProps = {
+  copy: {
+    eyebrow: string;
+    title: string;
+    highlighted: string;
+    description: string;
+    ctaPrimary: string;
+    ctaSecondary: string;
+  };
+  heroImage: { src: string; alt: string };
+  gradeOptions: { value: string; label: string }[];
+  shiftOptions: { value: string; label: string }[];
+  ageMin: number;
+  ageMax: number;
+  privacyUrl: string;
+  privacyLabel: string;
+  campaignSubject: string;
+  campaignFromName: string;
+  campaignAccessKey: string;
+  campaignEnabled: boolean;
+  campaignRedirect: string;
+  campaignAction: string;
+  campaignScriptSrc: string;
+};
+
+const {
+  copy,
+  heroImage,
+  gradeOptions,
+  shiftOptions,
+  ageMin,
+  ageMax,
+  privacyUrl,
+  privacyLabel,
+  campaignSubject,
+  campaignFromName,
+  campaignAccessKey,
+  campaignEnabled,
+  campaignRedirect,
+  campaignAction,
+  campaignScriptSrc,
+} = Astro.props as FormProps;
+
+const formIsLive = campaignEnabled && Boolean(campaignAccessKey);
+---
+
+<section id="formulario" class="py-24 bg-[#FAF8F5] relative overflow-hidden">
+  <div
+    class="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-primary to-transparent opacity-20"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <span class="text-primary font-semibold tracking-wider text-sm uppercase mb-3 block"
+        >{copy.eyebrow}</span
+      >
+      <h2 class="font-serif text-4xl md:text-5xl font-bold text-foreground leading-tight mb-4">
+        {copy.title} <span class="text-primary">{copy.highlighted}</span>
+      </h2>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed font-light">
+        {copy.description}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
+      <div class="lg:col-span-3 bg-white rounded-2xl shadow-xl p-8 md:p-10 border border-gray-100">
+        <h3 class="font-serif text-2xl font-bold text-foreground mb-8">
+          {copy.ctaPrimary}
+        </h3>
+
+        {
+          formIsLive ? (
+            <form
+              action={campaignAction}
+              method="POST"
+              aria-label="Formulário de manifestação de interesse no concurso de bolsas"
+              class="space-y-5"
+            >
+              <input type="hidden" name="access_key" value={campaignAccessKey} />
+              <input type="hidden" name="subject" value={campaignSubject} />
+              <input type="hidden" name="from_name" value={campaignFromName} />
+              <input
+                type="hidden"
+                name="redirect"
+                value={campaignRedirect}
+              />
+              <input
+                type="checkbox"
+                name="botcheck"
+                class="hidden"
+                style="display: none;"
+                aria-hidden="true"
+              />
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label
+                    for="cb-student-name"
+                    class="block text-sm font-semibold text-gray-700 mb-1.5"
+                  >
+                    Nome do aluno <span class="text-primary" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    id="cb-student-name"
+                    name="student_name"
+                    type="text"
+                    required
+                    minlength="2"
+                    maxlength="200"
+                    autocomplete="name"
+                    placeholder="Nome completo do aluno"
+                    class="w-full px-4 py-3 rounded-lg border border-gray-200 text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="cb-guardian-name"
+                    class="block text-sm font-semibold text-gray-700 mb-1.5"
+                  >
+                    Nome do responsável <span class="text-primary" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    id="cb-guardian-name"
+                    name="guardian_name"
+                    type="text"
+                    required
+                    minlength="2"
+                    maxlength="200"
+                    autocomplete="name"
+                    placeholder="Nome do responsável"
+                    class="w-full px-4 py-3 rounded-lg border border-gray-200 text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label
+                    for="cb-age"
+                    class="block text-sm font-semibold text-gray-700 mb-1.5"
+                  >
+                    Idade do aluno <span class="text-primary" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    id="cb-age"
+                    name="student_age"
+                    type="number"
+                    required
+                    min={ageMin}
+                    max={ageMax}
+                    inputmode="numeric"
+                    placeholder="Idade em anos"
+                    class="w-full px-4 py-3 rounded-lg border border-gray-200 text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="cb-shift"
+                    class="block text-sm font-semibold text-gray-700 mb-1.5"
+                  >
+                    Turno desejado <span class="text-primary" aria-hidden="true">*</span>
+                  </label>
+                  <select
+                    id="cb-shift"
+                    name="desired_shift"
+                    required
+                    class="w-full px-4 py-3 rounded-lg border border-gray-200 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors bg-white appearance-none"
+                  >
+                    <option value="" disabled selected>Selecione um turno</option>
+                    {shiftOptions.map((opt) => (
+                      <option value={opt.value}>{opt.label}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label
+                  for="cb-grade"
+                  class="block text-sm font-semibold text-gray-700 mb-1.5"
+                >
+                  Turma desejada <span class="text-primary" aria-hidden="true">*</span>
+                </label>
+                <select
+                  id="cb-grade"
+                  name="desired_grade"
+                  required
+                  class="w-full px-4 py-3 rounded-lg border border-gray-200 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors bg-white appearance-none"
+                >
+                  <option value="" disabled selected>Selecione uma turma</option>
+                  {gradeOptions.map((opt) => (
+                    <option value={opt.value}>{opt.label}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label
+                    for="cb-email"
+                    class="block text-sm font-semibold text-gray-700 mb-1.5"
+                  >
+                    E-mail <span class="text-primary" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    id="cb-email"
+                    name="email"
+                    type="email"
+                    required
+                    maxlength="320"
+                    autocomplete="email"
+                    placeholder="seu@email.com"
+                    class="w-full px-4 py-3 rounded-lg border border-gray-200 text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="cb-phone"
+                    class="block text-sm font-semibold text-gray-700 mb-1.5"
+                  >
+                    Telefone / WhatsApp <span class="text-primary" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    id="cb-phone"
+                    name="phone"
+                    type="tel"
+                    required
+                    minlength="8"
+                    maxlength="20"
+                    inputmode="tel"
+                    autocomplete="tel"
+                    placeholder="(98) 9 0000-0000"
+                    class="w-full px-4 py-3 rounded-lg border border-gray-200 text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div class="h-captcha" data-captcha="true"></div>
+
+              <p
+                id="form-status"
+                role="status"
+                aria-live="polite"
+                class="hidden rounded-lg px-4 py-3 text-sm font-medium text-center"
+              >
+              </p>
+
+              <button
+                id="form-submit"
+                type="submit"
+                class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-primary/25 transition-all hover:scale-[1.02] tracking-wider uppercase text-sm cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {copy.ctaSecondary}
+              </button>
+
+              <p class="text-xs text-gray-400 text-center">
+                Ao enviar, você concorda com o tratamento dos dados pela escola e
+                pelo serviço de formulário{" "}
+                <a
+                  href={privacyUrl}
+                  class="underline hover:text-primary transition-colors cursor-pointer"
+                  rel="noopener"
+                >
+                  {privacyLabel}
+                </a>.
+              </p>
+            </form>
+          ) : (
+            <div
+              role="status"
+              aria-live="polite"
+              class="rounded-lg border border-amber-200 bg-amber-50 text-amber-900 p-5 text-sm leading-relaxed"
+            >
+              <p class="font-semibold mb-1">Manifestações temporariamente indisponíveis.</p>
+              <p>
+                A campanha ainda não foi habilitada pela escola. Caso queira
+                registrar interesse, fale conosco pelo WhatsApp ou aguarde a
+                próxima abertura.
+              </p>
+            </div>
+          )
+        }
+      </div>
+
+      <div class="lg:col-span-2 flex flex-col gap-5">
+        <div class="bg-primary rounded-2xl p-8 text-white">
+          <h3 class="font-serif text-xl font-bold mb-6">Como funciona</h3>
+          <ol class="space-y-4 text-sm leading-relaxed">
+            <li>
+              <span class="block text-secondary font-semibold mb-1">1. Preencha os dados</span>
+              Conte quem é o aluno e quem é o responsável. As informações são
+              enviadas diretamente à escola.
+            </li>
+            <li>
+              <span class="block text-secondary font-semibold mb-1">2. Aguarde o contato</span>
+              A escola retornará pelo WhatsApp ou telefone informados para
+              explicar o concurso e os próximos passos.
+            </li>
+            <li>
+              <span class="block text-secondary font-semibold mb-1">3. Decisão presencial</span>
+              As condições do concurso serão apresentadas individualmente; esta
+              manifestação não garante bolsa ou matrícula.
+            </li>
+          </ol>
+        </div>
+
+        <div class="relative overflow-hidden rounded-2xl shadow-xl border border-gray-100 bg-white aspect-[4/5] lg:aspect-auto lg:min-h-80">
+          <img
+            src={heroImage.src}
+            alt={heroImage.alt}
+            loading="lazy"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {
+    formIsLive && (
+      <script src={campaignScriptSrc} async defer></script>
+    )
+  }
+</section>
