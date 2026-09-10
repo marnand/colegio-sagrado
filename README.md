@@ -33,6 +33,20 @@ O formulário de contato é um POST HTML nativo para `https://api.web3forms.com/
 - Data e horário são preferências; a escola confirma a visita por telefone ou WhatsApp.
 - Há uma página `/privacidade/` provisória que precisa do texto definitivo antes do lançamento em produção.
 
+## Concurso de Bolsas
+
+A landing page `/concurso-bolsas/` é uma manifestação de interesse sazonal. O formulário envia os sete campos exigidos direto para o Web3Forms, com hCaptcha e redirect dedicado para `/concurso-bolsas/obrigado/?submitted=1`. A confirmação é específica da campanha e **não** compartilha o `/obrigado/` do contato institucional.
+
+Para evitar envios acidentais em preview, o HTML renderiza um estado "manifestações temporariamente indisponíveis" (sem `action`, sem campos enviados) sempre que qualquer uma das variáveis abaixo estiver ausente ou for `false` no build. O build local não exige nenhuma chave para compilar.
+
+Variáveis públicas adicionais (a chave pública do Web3Forms é uma `PUBLIC_*` e não é um segredo de servidor):
+
+- `PUBLIC_WEB3FORMS_CONCURSO_ACCESS_KEY` — access key própria da campanha no painel Web3Forms. Use uma chave dedicada e **não** reutilize a do contato institucional para permitir rotação/desativação independentes.
+- `PUBLIC_CONCURSO_BOLSAS_FORM_ENABLED` — `true` libera o formulário produtivo. Em ambientes locais e previews, mantenha `false` (ou ausente) para impedir qualquer envio.
+- `PUBLIC_WEB3FORMS_REDIRECT` e `PUBLIC_WEB3FORMS_SUBJECT` globais continuam sendo usados apenas pelo formulário de contato; **não** reaproveite no concurso.
+
+A página **não** deve ser publicada em produção enquanto a política de privacidade definitiva da escola não estiver publicada e referenciada, o assunto e o e-mail receptor não estiverem confirmados no painel Web3Forms, e o hCaptcha não estiver habilitado para o formulário da campanha. Procedimento de verificação manual antes de abrir a campanha: `npm run build`; inspecionar `dist/client/concurso-bolsas/index.html` para confirmar a presença de `action="https://api.web3forms.com/submit"`, dos sete `name` (`student_name`, `guardian_name`, `student_age`, `desired_grade`, `desired_shift`, `email`, `phone`) e do `h-captcha`; smoke test no domínio de produção com dados sintéticos conferindo o e-mail receptor e a ausência de autorresposta; revisar a política, retenção e ACL/MFA da caixa de entrada.
+
 ## Deploy (Cloudflare Workers)
 
 O deploy é feito automaticamente pelo build system do Cloudflare Workers em pushes para `main`: roda `npm run build` e depois `npx wrangler deploy` usando `wrangler.jsonc`.
