@@ -5,6 +5,7 @@ type HeaderVariant = 'home' | 'standalone';
 
 type HeaderProps = {
   variant?: HeaderVariant;
+  ctaHref?: string | null;
 };
 
 const homeNavLinks: { id: string; label: string }[] = [
@@ -15,7 +16,7 @@ const homeNavLinks: { id: string; label: string }[] = [
   { id: 'contato', label: 'CONTATO' },
 ];
 
-export default function Header({ variant = 'home' }: HeaderProps) {
+export default function Header({ variant = 'home', ctaHref = null }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuId = useId();
@@ -147,12 +148,16 @@ export default function Header({ variant = 'home' }: HeaderProps) {
             >
               FALAR COM A ESCOLA
             </a>
-            <a
-              href='#formulario'
-              className='inline-flex items-center justify-center bg-primary hover:bg-primary-dark text-white font-bold py-2.5 px-6 rounded-full shadow-md shadow-primary/30 text-sm tracking-wide transition-all cursor-pointer'
-            >
-              INSCREVER-SE
-            </a>
+            {ctaHref ? (
+              <a
+                href={ctaHref}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='inline-flex items-center justify-center bg-primary hover:bg-primary-dark text-white font-bold py-2.5 px-6 rounded-full shadow-md shadow-primary/30 text-sm tracking-wide transition-all cursor-pointer'
+              >
+                INSCREVER-SE
+              </a>
+            ) : null}
           </div>
         )}
       </div>

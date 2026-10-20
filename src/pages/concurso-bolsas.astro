@@ -1,180 +1,408 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.tsx';
-import ConcursoBolsasForm from '../components/ConcursoBolsasForm.astro';
 import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+import {
+  AlertCircle,
+  BookOpen,
+  FileText,
+  ScrollText,
+} from 'lucide-react';
 
-// TODO: substituir antes da publicação — definir com a escola.
+const formUrl =
+  'https://docs.google.com/forms/d/e/1FAIpQLSdbvtJV0r74U9kDLDMu8zmnjXybrA08Z__I-tycTjMSbhFVYg/viewform';
+
+const whatsappUrl = 'https://wa.me/5598981410015';
+
+const enrollmentDeadline = new Date('2026-10-30T23:59:59-03:00');
+const isCampaignOpen =
+  !Number.isNaN(enrollmentDeadline.getTime()) && Date.now() < enrollmentDeadline.getTime();
+
 const copy = {
   eyebrow: 'Concurso de Bolsas',
-  title: 'Demonstre interesse no',
-  highlighted: 'Concurso de Bolsas',
+  title: 'Concurso de',
+  highlighted: 'Bolsas 2027',
   description:
-    'Preencha o formulário para que a escola entre em contato, apresente as condições do concurso e oriente sua família sobre os próximos passos.',
-  ctaPrimary: 'Manifestação de interesse',
-  ctaSecondary: 'Enviar manifestação',
+    'Destinado exclusivamente a novos alunos — quem estuda em outra instituição e deseja ingressar no Colégio Sagrado Coração de Jesus em 2027.',
+  note: 'A inscrição é feita pelo formulário oficial da escola. Após o envio, você recebe a mensagem de confirmação com todas as orientações.',
+  enrollmentDeadlineLabel: 'Inscrições até 30/10/2026',
+  examDateLabel: 'Prova: 07/11/2026',
+  closedBadge: 'Inscrições encerradas',
+  closedNote:
+    'As inscrições para esta edição encerraram em 30/10/2026. Fale com a escola para conhecer as próximas oportunidades de bolsa e matrícula.',
+  ctaPrimary: 'Inscrever-se agora',
+  ctaPrimaryClosed: 'Falar com a escola',
+  ctaSecondary: 'Ver documentos oficiais',
 };
 
-// TODO: substituir pela imagem aprovada pela escola antes da publicação.
-const heroImage = {
-  src: '/turma.webp',
-  alt: 'Alunos do Colégio Sagrado em sala de aula durante atividade pedagógica',
-};
-
-// TODO: definir com a escola as turmas e turnos que aparecerão no formulário.
-const gradeOptions = [
-  { value: 'educacao-infantil', label: 'Educação Infantil' },
-  { value: 'fundamental-i', label: 'Ensino Fundamental I' },
-  { value: 'fundamental-ii', label: 'Ensino Fundamental II' },
+const steps = [
+  {
+    number: '1',
+    title: 'Inscrição online',
+    text: 'Até 30/10/2026, preencha o formulário oficial com os dados do candidato e do responsável.',
+  },
+  {
+    number: '2',
+    title: 'Confirmação',
+    text: 'Após o envio, você recebe a mensagem de confirmação e pode estudar com o Roteiro dos Conteúdos da prova.',
+  },
+  {
+    number: '3',
+    title: 'Prova',
+    text: 'No dia 07/11/2026, o candidato realiza a prova do concurso de bolsas.',
+  },
+  {
+    number: '4',
+    title: 'Resultado e matrícula',
+    text: 'O resultado e as condições de matrícula seguem o disposto no Edital e no Regulamento do concurso.',
+  },
 ];
 
-const shiftOptions = [
-  { value: 'matutino', label: 'Matutino' },
-  { value: 'vespertino', label: 'Vespertino' },
+const documents = [
+  {
+    icon: FileText,
+    title: 'Edital do Concurso de Bolsas 2027',
+    text: 'Regras oficiais, etapas, datas e condições da oferta de bolsas desta edição.',
+    href: 'https://drive.google.com/file/d/1oJIf9dWkgnTVEbWw6QYZepu0T3xfD9vv/view?usp=sharing',
+  },
+  {
+    icon: BookOpen,
+    title: 'Roteiro dos Conteúdos para a Prova',
+    text: 'Conteúdos e orientações para a preparação do candidato antes do dia 07/11/2026.',
+    href: 'https://drive.google.com/file/d/1OJdrmf7bVYLYtlB4iYdMRRzyghPwFXvL/view?usp=sharing',
+  },
+  {
+    icon: ScrollText,
+    title: 'Regulamento do Concurso de Bolsas 2027',
+    text: 'Normas completas de participação, classificação, desempate e matrícula.',
+    href: 'https://drive.google.com/file/d/1n-lz1pcIKnWFLCIqLKUuv8vd-sWzPYU7/view?usp=sharing',
+  },
 ];
 
-// TODO: confirmar com a escola os limites mínimo e máximo de idade.
-const ageMin = 2;
-const ageMax = 14;
+const notices = [
+  {
+    icon: AlertCircle,
+    title: 'Quem pode participar',
+    text: 'Alunos matriculados em outras instituições de ensino que desejam ingressar no Colégio Sagrado em 2027. Alunos já matriculados no Colégio Sagrado não participam deste concurso.',
+  },
+  {
+    icon: AlertCircle,
+    title: 'Turno sujeito a disponibilidade',
+    text: 'O turno indicado na inscrição está sujeito à disponibilidade de vagas para 2027.',
+  },
+  {
+    icon: AlertCircle,
+    title: 'Concordância com as regras',
+    text: 'Ao enviar a inscrição, o responsável confirma que leu e concorda com todas as regras do Edital e do Regulamento Oficial do Concurso de Bolsas 2027.',
+  },
+];
 
-// TODO: substituir pela URL da política aprovada pela escola antes da publicação.
-const privacyUrl = '/privacidade/';
-const privacyLabel = 'Política de Privacidade';
-
-// TODO: confirmar com a escola a página canônica e a chave Web3Forms própria da campanha.
-const campaignSubject = 'Concurso de Bolsas — manifestação de interesse';
-const campaignFromName = 'Concurso de Bolsas — Colégio Sagrado';
-const campaignAccessKey = import.meta.env.PUBLIC_WEB3FORMS_CONCURSO_ACCESS_KEY ?? '';
-const campaignEnabledRaw = import.meta.env.PUBLIC_CONCURSO_BOLSAS_FORM_ENABLED ?? 'false';
-const campaignEnabled = campaignEnabledRaw === 'true' || campaignEnabledRaw === '1';
-const campaignRedirect = 'https://colegiosagrado.com.br/concurso-bolsas/obrigado/?submitted=1';
-const campaignAction = 'https://api.web3forms.com/submit';
-const campaignScriptSrc = 'https://web3forms.com/client/script.js';
-
-const pageTitle = 'Concurso de Bolsas — Colégio Sagrado';
+const pageTitle = 'Concurso de Bolsas 2027 — Colégio Sagrado';
 const pageDescription =
-  'Manifeste interesse no concurso de bolsas do Colégio Sagrado do Coração de Jesus e aguarde o contato da escola.';
+  'Inscrições abertas até 30/10/2026 para o Concurso de Bolsas 2027 do Colégio Sagrado Coração de Jesus. Concorra a uma bolsa para ingressar em 2027: confira as datas, o edital e o regulamento.';
 ---
 
-<Layout>
-  <Header client:load variant="standalone" />
+<Layout title={pageTitle} description={pageDescription}>
+  <Header
+    client:load
+    variant="standalone"
+    ctaHref={isCampaignOpen ? formUrl : null}
+  />
 
-  <main
-    id="main-content"
-    class="min-h-screen overflow-x-hidden bg-white"
-  >
-    <section
-      class="relative pt-32 pb-16 bg-surface-dark overflow-hidden"
-    >
+  <main id="main-content" class="min-h-screen overflow-x-hidden bg-white">
+    <section class="relative pt-32 pb-20 bg-surface-dark overflow-hidden">
       <div class="absolute inset-0 z-0 opacity-40">
-        <img
-          src={heroImage.src}
+        <Image
+          src="/turma.webp"
           alt=""
           aria-hidden="true"
-          class="w-full h-full object-cover grayscale"
+          role="presentation"
           loading="eager"
+          fetchpriority="high"
+          width={1536}
+          height={1024}
+          class="w-full h-full object-cover grayscale"
         />
-        <div class="absolute inset-0 bg-linear-to-t from-surface-dark via-primary/80 to-surface-dark/90"></div>
+        <div
+          class="absolute inset-0 bg-linear-to-t from-surface-dark via-primary/80 to-surface-dark/90"
+        >
+        </div>
       </div>
 
       <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
-        <span class="inline-block py-1 px-3 bg-secondary/20 text-secondary border border-secondary/30 rounded-full text-sm font-semibold uppercase tracking-widest mb-6">
+        <span
+          class="inline-block py-1 px-3 bg-secondary/20 text-secondary border border-secondary/30 rounded-full text-sm font-semibold uppercase tracking-widest mb-6"
+        >
           {copy.eyebrow}
         </span>
-        <h1 class="font-serif text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+        <h1
+          class="font-serif text-4xl md:text-6xl font-bold text-white mb-6 leading-tight"
+        >
           {copy.title} <span class="text-secondary">{copy.highlighted}</span>
         </h1>
-        <p class="text-xl text-white/80 mb-2 max-w-2xl mx-auto font-light">
+        <p class="text-xl text-white/80 mb-4 max-w-2xl mx-auto font-light">
           {copy.description}
         </p>
         <p class="text-base text-white/60 max-w-2xl mx-auto font-light">
-          O envio é uma manifestação de interesse. As condições e prazos do
-          concurso serão informados pela escola após o contato inicial.
+          {isCampaignOpen ? copy.note : copy.closedNote}
         </p>
+
+        {
+          isCampaignOpen ? (
+            <div class="mt-8 flex flex-wrap items-center justify-center gap-3 mb-10">
+              <span class="inline-flex items-center gap-2 py-2 px-4 bg-white/10 text-white rounded-full text-sm font-medium border border-white/20">
+                {copy.enrollmentDeadlineLabel}
+              </span>
+              <span class="inline-flex items-center gap-2 py-2 px-4 bg-white/10 text-white rounded-full text-sm font-medium border border-white/20">
+                {copy.examDateLabel}
+              </span>
+            </div>
+          ) : (
+            <div class="mt-8 flex justify-center mb-10">
+              <span class="inline-flex items-center gap-2 py-2 px-4 bg-white/10 text-white/80 rounded-full text-sm font-medium border border-white/20">
+                {copy.closedBadge}
+              </span>
+            </div>
+          )
+        }
+
+        {
+          isCampaignOpen ? (
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href={formUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block bg-secondary hover:bg-white text-primary px-10 py-4 rounded-full text-lg font-bold shadow-2xl shadow-secondary/20 transition-all transform hover:scale-105 cursor-pointer"
+              >
+                {copy.ctaPrimary}
+              </a>
+              <a
+                href="#documentos"
+                class="inline-block border-2 border-white/30 hover:border-white text-white hover:bg-white/10 px-10 py-4 rounded-full text-lg font-bold transition-all transform hover:scale-105 cursor-pointer"
+              >
+                {copy.ctaSecondary}
+              </a>
+            </div>
+          ) : (
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block bg-secondary hover:bg-white text-primary px-10 py-4 rounded-full text-lg font-bold shadow-2xl shadow-secondary/20 transition-all transform hover:scale-105 cursor-pointer"
+              >
+                {copy.ctaPrimaryClosed}
+              </a>
+              <a
+                href="#documentos"
+                class="inline-block border-2 border-white/30 hover:border-white text-white hover:bg-white/10 px-10 py-4 rounded-full text-lg font-bold transition-all transform hover:scale-105 cursor-pointer"
+              >
+                {copy.ctaSecondary}
+              </a>
+            </div>
+          )
+        }
       </div>
     </section>
 
-    <ConcursoBolsasForm
-      copy={copy}
-      heroImage={heroImage}
-      gradeOptions={gradeOptions}
-      shiftOptions={shiftOptions}
-      ageMin={ageMin}
-      ageMax={ageMax}
-      privacyUrl={privacyUrl}
-      privacyLabel={privacyLabel}
-      campaignSubject={campaignSubject}
-      campaignFromName={campaignFromName}
-      campaignAccessKey={campaignAccessKey}
-      campaignEnabled={campaignEnabled}
-      campaignRedirect={campaignRedirect}
-      campaignAction={campaignAction}
-      campaignScriptSrc={campaignScriptSrc}
-    />
+    <section id="como-funciona" class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14">
+          <span class="text-primary font-semibold tracking-wider text-sm uppercase mb-3 block">
+            Edição 2027
+          </span>
+          <h2 class="font-serif text-4xl md:text-5xl font-bold text-foreground leading-tight mb-4">
+            Como funciona
+          </h2>
+          <p class="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed font-light">
+            Do formulário de inscrição à matrícula: conheça o caminho completo do
+            candidato.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {
+            steps.map((step) => (
+              <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+                <div class="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center font-serif font-bold text-lg mb-5">
+                  {step.number}
+                </div>
+                <h3 class="font-serif text-xl font-bold text-foreground mb-3">
+                  {step.title}
+                </h3>
+                <p class="text-gray-600 text-sm leading-relaxed">{step.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="documentos" class="py-24 bg-surface-warm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14">
+          <span class="text-primary font-semibold tracking-wider text-sm uppercase mb-3 block">
+            Transparência
+          </span>
+          <h2 class="font-serif text-4xl md:text-5xl font-bold text-foreground leading-tight mb-4">
+            Documentos oficiais
+          </h2>
+          <p class="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed font-light">
+            Leia com atenção antes de se inscrever — ao enviar, o responsável
+            confirma que leu e concorda com todas as regras.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {
+            documents.map((document) => (
+              <a
+                href={document.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group bg-white rounded-2xl shadow-md border border-gray-100 p-8 flex flex-col transition-all hover:shadow-xl hover:-translate-y-1"
+              >
+                <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-5">
+                  <document.icon size={24} aria-hidden="true" />
+                </div>
+                <h3 class="font-serif text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                  {document.title}
+                </h3>
+                <p class="text-gray-600 text-sm leading-relaxed flex-1">
+                  {document.text}
+                </p>
+                <span class="inline-flex items-center gap-2 mt-6 text-primary font-semibold text-sm tracking-wide">
+                  Acessar documento
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg
+                  >
+                </span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="informacoes" class="py-24 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14">
+          <span class="text-primary font-semibold tracking-wider text-sm uppercase mb-3 block">
+            Informações importantes
+          </span>
+          <h2 class="font-serif text-4xl md:text-5xl font-bold text-foreground leading-tight mb-4">
+            Antes de se inscrever
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {
+            notices.map((notice) => (
+              <div class="bg-surface-warm rounded-2xl border border-gray-100 p-8">
+                <div class="flex items-center gap-3 mb-4">
+                  <notice.icon size={22} className="text-primary shrink-0" aria-hidden="true" />
+                  <h3 class="font-serif text-lg font-bold text-foreground">
+                    {notice.title}
+                  </h3>
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed">{notice.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="relative py-32 bg-surface-dark overflow-hidden">
+      <div class="absolute inset-0 z-0 opacity-40">
+        <Image
+          src="/biblioteca.webp"
+          alt=""
+          aria-hidden="true"
+          role="presentation"
+          loading="lazy"
+          width={1672}
+          height={941}
+          class="w-full h-full object-cover grayscale"
+        />
+        <div
+          class="absolute inset-0 bg-linear-to-t from-surface-dark via-primary/80 to-surface-dark/90"
+        >
+        </div>
+      </div>
+
+      <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+        <span
+          class="inline-block py-1 px-3 bg-secondary/20 text-secondary border border-secondary/30 rounded-full text-sm font-semibold uppercase tracking-widest mb-6"
+        >
+          {isCampaignOpen ? copy.enrollmentDeadlineLabel : 'Próximas oportunidades'}
+        </span>
+        <h2 class="font-serif text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+          {
+            isCampaignOpen
+              ? 'Garanta a inscrição do candidato'
+              : 'Acompanhe as próximas oportunidades'
+          }
+        </h2>
+        <p class="text-xl text-white/80 mb-10 max-w-2xl mx-auto font-light">
+          Estamos felizes por caminhar ao seu lado em busca de uma educação com
+          amor e excelência.
+        </p>
+
+        {
+          isCampaignOpen ? (
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href={formUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block bg-secondary hover:bg-white text-primary px-10 py-5 rounded-full text-lg font-bold shadow-2xl shadow-secondary/20 transition-all transform hover:scale-105 cursor-pointer"
+              >
+                Fazer inscrição
+              </a>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block border-2 border-white/30 hover:border-white text-white hover:bg-white/10 px-10 py-5 rounded-full text-lg font-bold transition-all transform hover:scale-105 cursor-pointer"
+              >
+                Falar no WhatsApp
+              </a>
+            </div>
+          ) : (
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block bg-secondary hover:bg-white text-primary px-10 py-5 rounded-full text-lg font-bold shadow-2xl shadow-secondary/20 transition-all transform hover:scale-105 cursor-pointer"
+              >
+                Falar no WhatsApp
+              </a>
+              <a
+                href="/#sobre-nos"
+                class="inline-block border-2 border-white/30 hover:border-white text-white hover:bg-white/10 px-10 py-5 rounded-full text-lg font-bold transition-all transform hover:scale-105 cursor-pointer"
+              >
+                Conhecer o Colégio Sagrado
+              </a>
+            </div>
+          )
+        }
+      </div>
+    </section>
   </main>
 
   <Footer />
-
-  <script is:inline>
-    (function () {
-      var form = document.getElementById('formulario');
-      if (!form) return;
-      var submitBtn = form.querySelector('#form-submit');
-      var status = form.querySelector('#form-status');
-      var originalLabel = submitBtn ? submitBtn.textContent : 'Enviar';
-      var submitting = false;
-
-      function setStatus(message, kind) {
-        if (!status) return;
-        status.textContent = message;
-        status.classList.remove(
-          'hidden',
-          'bg-green-100',
-          'text-green-800',
-          'bg-red-100',
-          'text-red-800'
-        );
-        if (kind === 'success') {
-          status.classList.add('bg-green-100', 'text-green-800');
-        } else {
-          status.classList.add('bg-red-100', 'text-red-800');
-        }
-      }
-
-      function clearStatus() {
-        if (!status) return;
-        status.textContent = '';
-        status.classList.add('hidden');
-        status.classList.remove(
-          'bg-green-100',
-          'text-green-800',
-          'bg-red-100',
-          'text-red-800'
-        );
-      }
-
-      function setSubmitting(value) {
-        if (!submitBtn) return;
-        submitting = value;
-        submitBtn.disabled = value;
-        submitBtn.textContent = value ? 'Enviando...' : originalLabel;
-      }
-
-      window.addEventListener('pageshow', function () {
-        setSubmitting(false);
-        clearStatus();
-      });
-
-      form.addEventListener('submit', function () {
-        if (submitting) return;
-        clearStatus();
-        var captcha = form.querySelector('textarea[name="h-captcha-response"]');
-        if (captcha && !captcha.value) {
-          setStatus('Por favor, complete o desafio de segurança.', 'error');
-          return;
-        }
-        setSubmitting(true);
-      });
-    })();
-  </script>
 </Layout>
